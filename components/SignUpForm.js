@@ -14,17 +14,17 @@ const SignUpForm = (props) => {
   const passwordRepeatRef = useRef();
   const [isPwMatch, setIsPwMatch] = useState(true);
   const [isFormValid, setIsFormValid] = useState(true);
-const [errorMessage, setErrorMessage] = useState(null)
-const [isLoading, setIsLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
   let router = useRouter();
-  
+
   /***********************************************************************/
   /***********************************************************************/
   /***********************************************************************/
- 
+
   const submitFormHandler = async (e) => {
     e.preventDefault();
-    setIsLoading(true)
+    setIsLoading(true);
     const enteredName = nameRef.current.value;
     const enteredPassword = passwordRef.current.value;
     const enteredEmail = emailRef.current.value;
@@ -50,7 +50,7 @@ const [isLoading, setIsLoading] = useState(false);
       password: enteredPassword,
       image:
         "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png",
-    }
+    };
 
     const response = await fetch("/api/sign-up", {
       method: "POST",
@@ -60,9 +60,9 @@ const [isLoading, setIsLoading] = useState(false);
       },
     });
     const data = await response.json();
-    setIsPwMatch(true)
-    setIsFormValid(true)
-    setErrorMessage(data.message)
+    setIsPwMatch(true);
+    setIsFormValid(true);
+    setErrorMessage(data.message);
 
     await signIn("credentials", {
       redirect: false,
@@ -70,10 +70,8 @@ const [isLoading, setIsLoading] = useState(false);
       password: enteredPassword,
       callbackUrl: "http://localhost:3000/profile",
     });
-    setIsLoading(false)
-    router.replace('/profile')
-
-    
+    setIsLoading(false);
+    router.replace("/profile");
   };
   /***********************************************************************/
   /***********************************************************************/
@@ -115,7 +113,7 @@ const [isLoading, setIsLoading] = useState(false);
                           className="input-group-text rounded-0 rounded-end "
                           id="basic-addon1"
                         >
-                          'abc'
+                          abc
                         </span>
                       </div>
                     </div>
@@ -179,7 +177,14 @@ const [isLoading, setIsLoading] = useState(false);
                       </div>
                     </div>
                   </div>
-                   {errorMessage && <p className="text-center text-danger">{errorMessage} <p>Do you want <Link href="/login">Login?</Link></p></p>}
+                  {errorMessage && (
+                    <p className="text-center text-danger">
+                      {errorMessage}{" "}
+                      <p>
+                        Do you want <Link href="/login">Login?</Link>
+                      </p>
+                    </p>
+                  )}
                   {!isPwMatch && (
                     <p className="text-center text-danger">
                       Passwords are not matching!
@@ -235,7 +240,10 @@ const [isLoading, setIsLoading] = useState(false);
                     }}
                     className=" btn btn-block  confirm-button border"
                   >
-                    <span className="fw-bold text-black-50"> Register with</span>
+                    <span className="fw-bold text-black-50">
+                      {" "}
+                      Register with
+                    </span>
                     <FcGoogle className="ms-2" size={30}></FcGoogle>
                   </button>
                 </div>

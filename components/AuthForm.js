@@ -105,7 +105,7 @@ const AuthForm = (props) => {
 
                 <div className=" d-flex flex-column text-center px-5 mt-3 mb-3">
                   <small className="agree-text">
-                    Don't you have an account yet?
+                    Dont you have an account yet?
                   </small>
                   <Link href="/register" className="terms">
                     Create a new one!
