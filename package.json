@@ -9,10 +9,23 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@next-auth/mongodb-adapter": "^1.1.1",
+    "bcryptjs": "^2.4.3",
+    "bootstrap": "^5.2.2",
     "eslint": "8.27.0",
     "eslint-config-next": "13.0.2",
+    "mongodb": "^4.11.0",
     "next": "13.0.2",
+    "next-auth": "^4.16.4",
+    "openssl": "^2.0.0",
     "react": "18.2.0",
-    "react-dom": "18.2.0"
+    "react-dom": "18.2.0",
+    "react-icons": "^4.6.0"
+  },
+  "devDependencies": {
+    "@svgr/webpack": "^6.5.1",
+    "file-loader": "^6.2.0",
+    "mongoose": "^6.7.2"
   }
+  
 }
