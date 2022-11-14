@@ -17,14 +17,14 @@ export const getServerSideProps = async (context) => {
       },
     };
   }
-  const response = await fetch("http://localhost:3000/api/get-expenses", {
+  const response = await fetch("/api/get-expenses", {
     method: "POST",
-    body: JSON.stringify({ emailOfUser: "onuralphho@hotmail.com"}),
+    body: JSON.stringify({ emailOfUser: session.user.email}),
     headers: { "Content-Type": "application/json" },
   });
   const expensesData = await response.json();
 
-  const res = await fetch("http://localhost:3000/api/get-user", {
+  const res = await fetch("/api/get-user", {
     method: "POST",
     body: JSON.stringify({ email: session.user.email }),
     headers: { "Content-Type": "application/json" },

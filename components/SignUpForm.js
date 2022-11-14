@@ -68,7 +68,7 @@ const SignUpForm = (props) => {
       redirect: false,
       email: enteredEmail,
       password: enteredPassword,
-      callbackUrl: "http://localhost:3000/profile",
+      callbackUrl: "/profile",
     });
     setIsLoading(false);
     router.replace("/profile");
@@ -221,7 +221,7 @@ const SignUpForm = (props) => {
                     type="button"
                     onClick={() => {
                       signIn("github", {
-                        callbackUrl: "http://localhost:3000/profile",
+                        callbackUrl: "/profile",
                       });
                     }}
                     className="btn btn-dark btn-block confirm-button mb-2 align-items-center"
@@ -235,7 +235,7 @@ const SignUpForm = (props) => {
                     type="button"
                     onClick={() => {
                       signIn("google", {
-                        callbackUrl: "http://localhost:3000/profile",
+                        callbackUrl: "/profile",
                       });
                     }}
                     className=" btn btn-block  confirm-button border"
