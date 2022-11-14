@@ -17,7 +17,7 @@ const Profile = (props) => {
   const [showPpChanger, setShowPpChanger] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isExpenseSaved, setIsExpenseSave] = useState(false);
-  console.log(props.expensesData)
+  
 
   const router = useRouter()
   const refreshData = () => router.replace(router.asPath);
@@ -155,7 +155,7 @@ const Profile = (props) => {
           
             <h2 className="text-center">Expenses</h2>
             {props.expensesData.expenses.map((expense) =>(
-              <Expense expenseData={expense}/>
+              <Expense key={Math.random()} expenseData={expense}/>
             ))}
 
 
