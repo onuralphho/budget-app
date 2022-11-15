@@ -216,7 +216,7 @@ const [isLoading, setIsLoading] = useState(false);
                     type="button"
                     onClick={() => {
                       signIn("github", {
-                        callbackUrl: "https://budget-app-ivory-two.vercel.app/profile",
+                        callbackUrl: "/profile",
                       });
                     }}
                     className="btn btn-dark btn-block confirm-button mb-2 align-items-center"
@@ -230,7 +230,7 @@ const [isLoading, setIsLoading] = useState(false);
                     type="button"
                     onClick={() => {
                       signIn("google", {
-                        callbackUrl: "https://budget-app-ivory-two.vercel.app/profile",
+                        callbackUrl: "/profile",
                       });
                     }}
                     className=" btn btn-block  confirm-button border"

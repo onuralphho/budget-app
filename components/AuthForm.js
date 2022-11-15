@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
 import { useRouter } from "next/router";
-import { signIn, getSession } from "next-auth/react";
+import { signIn} from "next-auth/react";
 import AuthSvg from "../svg/Authentication.svg";
 import FingerPrintSvg from "../svg/fingerprint.svg";
 import Link from "next/link";
@@ -9,7 +9,6 @@ import { BsGithub } from "react-icons/bs";
 const AuthForm = (props) => {
   const emailRef = useRef();
   const passwordRef = useRef();
-  const [isFormValid, setIsFormValid] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState();
   let router = useRouter();
@@ -21,7 +20,7 @@ const AuthForm = (props) => {
       redirect: false,
       email: emailRef.current.value,
       password: passwordRef.current.value,
-      callbackUrl: "https://budget-app-ivory-two.vercel.app/profile/profile",
+      callbackUrl: "/profile",
     });
     setIsLoading(false);
     setErrorMessage(status.error);
@@ -97,12 +96,7 @@ const AuthForm = (props) => {
                 {errorMessage && (
                   <p className="text-center text-danger">{errorMessage}</p>
                 )}
-                {!isFormValid && (
-                  <p className="text-center text-danger">
-                    Please Enter valid credentials
-                  </p>
-                )}
-
+               
                 <div className=" d-flex flex-column text-center px-5 mt-3 mb-3">
                   <small className="agree-text">
                     Dont you have an account yet?
@@ -128,7 +122,7 @@ const AuthForm = (props) => {
                     type="button"
                     onClick={() => {
                       signIn("github", {
-                        callbackUrl: "https://budget-app-ivory-two.vercel.app/profile/profile",
+                        callbackUrl: "/profile",
                       });
                     }}
                     className="btn btn-dark btn-block confirm-button mb-2 align-items-center"
@@ -142,7 +136,7 @@ const AuthForm = (props) => {
                     type="button"
                     onClick={() => {
                       signIn("google", {
-                        callbackUrl: "https://budget-app-ivory-two.vercel.app/profile/profile",
+                        callbackUrl: "/profile",
                       });
                     }}
                     className=" btn btn-block confirm-button border"
