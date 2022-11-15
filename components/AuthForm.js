@@ -21,7 +21,7 @@ const AuthForm = (props) => {
       redirect: false,
       email: emailRef.current.value,
       password: passwordRef.current.value,
-      callbackUrl: "http://localhost:3000/profile",
+      callbackUrl: "https://budget-app-ivory-two.vercel.app/profile/profile",
     });
     setIsLoading(false);
     setErrorMessage(status.error);
@@ -128,7 +128,7 @@ const AuthForm = (props) => {
                     type="button"
                     onClick={() => {
                       signIn("github", {
-                        callbackUrl: "http://localhost:3000/profile",
+                        callbackUrl: "https://budget-app-ivory-two.vercel.app/profile/profile",
                       });
                     }}
                     className="btn btn-dark btn-block confirm-button mb-2 align-items-center"
@@ -142,7 +142,7 @@ const AuthForm = (props) => {
                     type="button"
                     onClick={() => {
                       signIn("google", {
-                        callbackUrl: "http://localhost:3000/profile",
+                        callbackUrl: "https://budget-app-ivory-two.vercel.app/profile/profile",
                       });
                     }}
                     className=" btn btn-block confirm-button border"

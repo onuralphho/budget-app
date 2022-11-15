@@ -3,7 +3,7 @@ const Expense = (props) => {
  
   return (
   
-      <div  className="col-md-4 col-xl-3 border shadow p-2 rounded-5 expense-card">
+      <div  className="col-md-4 col-xl-3 border rounded-5 shadow p-3">
         <div className="row">
           <div className="col-6">
             <img

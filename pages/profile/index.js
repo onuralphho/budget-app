@@ -17,14 +17,14 @@ export const getServerSideProps = async (context) => {
       },
     };
   }
-  const response = await fetch("/api/get-expenses", {
+  const response = await fetch("https://budget-app-ivory-two.vercel.app//api/get-expenses", {
     method: "POST",
-    body: JSON.stringify({ emailOfUser: session.user.email}),
+    body: JSON.stringify({ emailOfUser: session.user.email }),
     headers: { "Content-Type": "application/json" },
   });
   const expensesData = await response.json();
 
-  const res = await fetch("/api/get-user", {
+  const res = await fetch("https://budget-app-ivory-two.vercel.app/api/get-user", {
     method: "POST",
     body: JSON.stringify({ email: session.user.email }),
     headers: { "Content-Type": "application/json" },

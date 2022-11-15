@@ -1,10 +1,10 @@
-import { useSession } from "next-auth/react";
+import { useSession} from "next-auth/react";
 import { useState, useRef } from "react";
 import AddExpenseSVG from "../svg/Transactional SMS.svg";
 import { MdCheck } from "react-icons/md";
 import { sleep } from "../utils/sleep";
 import Expense from "./Expense";
-import { useRouter } from "next/router";
+import { useRouter } from 'next/router';
 const Profile = (props) => {
   const { data: session } = useSession();
   const [isNewExpense, setIsNewExpense] = useState(false);
@@ -17,8 +17,9 @@ const Profile = (props) => {
   const [showPpChanger, setShowPpChanger] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isExpenseSaved, setIsExpenseSave] = useState(false);
+ 
 
-  const router = useRouter();
+  const router = useRouter()
   const refreshData = () => router.replace(router.asPath);
   const submitFormHandler = async (e) => {
     setIsLoading(true);
@@ -55,23 +56,29 @@ const Profile = (props) => {
     });
     const data = await response.json();
     setIsLoading(false);
-    setIsExpenseSave(true);
-    await sleep(1000);
-    setIsExpenseSave(false);
+    setIsExpenseSave(true)
+    await sleep(1000)
+    setIsExpenseSave(false)
 
+      
     setIsFormValid(true);
-    refreshData();
+    refreshData()
   };
 
-  const changeProfilePicHandler = async (e) => {
-    const obj = { image: imageRef.current.value, email: session.user.email };
+  const changeProfilePicHandler =async (e) => {
+    
 
-    await fetch("/api/profile-update", {
-      method: "PUT",
-      body: JSON.stringify(obj),
-      headers: { "Content-Type": "application/json" },
-    });
-  };
+    const obj = {image:imageRef.current.value, email:session.user.email}
+
+     await fetch('/api/profile-update',{
+      method:'PUT',
+      body:JSON.stringify(obj),
+      headers:{'Content-Type':'application/json'}
+    })
+    
+
+  }
+
 
   return (
     <div className="container  shadow rounded-5 p-4">
@@ -115,10 +122,7 @@ const Profile = (props) => {
             <span>
               <h1>{props.userData.user.name}</h1>
               <span>
-                <p className="text-secondary">
-                  {" "}
-                  ({props.userData.user.email}){" "}
-                </p>
+                <p className="text-secondary"> ({props.userData.user.email}) </p>
               </span>
             </span>
           </div>
@@ -148,11 +152,16 @@ const Profile = (props) => {
       </div>
       {isExpenses && (
         <div className="row gap-3 p-4  mt-3 justify-content-around">
-          <h2 className="text-center">Expenses</h2>
-          {props.expensesData.expenses.map((expense) => (
-            <Expense key={Math.random()} expenseData={expense} />
-          ))}
-        </div>
+          
+            <h2 className="text-center">Expenses</h2>
+            {props.expensesData.expenses.map((expense) =>(
+              <Expense key={Math.random()} expenseData={expense}/>
+            ))}
+
+
+            
+          </div>
+       
       )}
       {isNewExpense && (
         <div className="row mt-3 justify-content-center gap-5">
@@ -189,20 +198,10 @@ const Profile = (props) => {
                   Please fill all information about your expense!
                 </p>
               )}
-              <button
-                type="submit"
-                className={`w-100 btn btn-primary ${
-                  isExpenseSaved && "btn-success"
-                }`}
-                style={{ transition: "all 0.6s ease-out" }}
-              >
+              <button type="submit" className={`w-100 btn btn-primary ${isExpenseSaved&& 'btn-success'}`} style={{transition:'all 0.6s ease-out'}}> 
                 {isLoading ? (
                   <span className="spinner-border spinner-border-sm"></span>
-                ) : isExpenseSaved ? (
-                  <>
-                    <span>Expense Submited</span> <MdCheck size={20} />
-                  </>
-                ) : (
+                ) : isExpenseSaved ? <><span>Expense Submited</span> <MdCheck size={20}/></> : ( 
                   <span> Add Expense!</span>
                 )}
               </button>
@@ -215,3 +214,5 @@ const Profile = (props) => {
 };
 
 export default Profile;
+
+
