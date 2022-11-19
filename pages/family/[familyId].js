@@ -5,9 +5,10 @@ import { useSession, getSession } from "next-auth/react";
 const ProductDetail = ({ familyDetails }) => {
   const [isAddNewMember, setIsNewMember] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const router = useRouter();
-  const emailRef = useRef();
 
+  const emailRef = useRef();
+  const router = useRouter();
+  const refreshData = () => router.replace(router.asPath);
   const memberAddFormHandler = async (e) => {
     e.preventDefault();
     console.log(familyDetails.family._id);
@@ -21,6 +22,7 @@ const ProductDetail = ({ familyDetails }) => {
     });
 
     const data = await res.json();
+    refreshData();
   };
 
   return (
