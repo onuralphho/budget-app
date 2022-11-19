@@ -136,7 +136,7 @@ const AuthForm = (props) => {
                     type="button"
                     onClick={() => {
                       signIn("google", {
-                        callbackUrl: "/profile",
+                        callbackUrl: `/profile`,
                       });
                     }}
                     className=" btn btn-block confirm-button border"

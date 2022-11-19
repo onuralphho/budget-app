@@ -1,9 +1,11 @@
 const Expense = (props) => {
  const date = props.expenseData.date.split("T")
  
+
+
   return (
   
-      <div  className="col-md-4 col-xl-3 border rounded-5 shadow p-3">
+      <div  className="CardEffect col-md-4 col-xl-3 border rounded-5 shadow p-3" >
         <div className="row">
           <div className="col-6">
             <img

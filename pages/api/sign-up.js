@@ -35,4 +35,3 @@ const handler = async (req, res) => {
 };
 
 export default handler;
-// email, password: await hash(password, 12), name, image 

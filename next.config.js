@@ -7,7 +7,10 @@ const nextConfig = {
       use: '@svgr/webpack'
     })
     return config
-  }
+  },
+  images: {
+    domains: ['cdn.dribbble.com'],
+  },
 }
 
 module.exports = nextConfig

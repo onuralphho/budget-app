@@ -52,7 +52,7 @@ const MainNavigation = () => {
                   </div>
 
                   {session && profileShow && (
-                    <div className="row ">
+                    <div className="row " >
                       <div className="col">
                         <ul
                           onMouseOver={() => {
@@ -63,8 +63,8 @@ const MainNavigation = () => {
                           }}
                           className="bg-dark list-group position-fixed"
                         >
-                          <li className="list-group-item">
-                            <Link href="/profile" className="link-dark">
+                          <li className="list-group-item ">
+                            <Link href="/profile" className="link-dark text-decoration-none">
                               Profile
                             </Link>
                           </li>
@@ -86,7 +86,7 @@ const MainNavigation = () => {
               )}
 
               {!session ? (
-                <div className="col-md-5 pt-1 mb-2 m-md-0 ">
+                <div className="col-6 col-md-5 pt-1 mb-2 m-md-0 ">
                   <Link
                   style={{transition:'all 0.3s ease-in'}}
                     className={

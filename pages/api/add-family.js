@@ -1,6 +1,6 @@
-
-import expenses from "../../model/expenseSchema";
+import families from "../../model/familySchema";
 import connectMongo from "../../database/conn";
+
 const handler2 = async (req, res) => {
   connectMongo().catch((error) => res.json({ error: "Connection Failed...!" }));
 
@@ -9,9 +9,9 @@ const handler2 = async (req, res) => {
       return res.status(404).json({ error: "Don't have form data...!" });
     }
  
-    expenses.create(req.body, function(err,data){
-      if (err) return res.status(404).json({message:'Something Went Wrong!'});
-        res.status(201).json({ status: true, expense: data });
+    families.create(req.body, function(err,data){
+      if (err) return res.status(404).json({message:'Something went wrong!'});
+        res.status(201).json({ status: true, families: data });
     });
   } else {
     res

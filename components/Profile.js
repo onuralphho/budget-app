@@ -5,6 +5,7 @@ import { MdCheck } from "react-icons/md";
 import { sleep } from "../utils/sleep";
 import Expense from "./Expense";
 import { useRouter } from "next/router";
+import Link from "next/link";
 const Profile = (props) => {
   const { data: session } = useSession();
   const [isNewExpense, setIsNewExpense] = useState(false);
@@ -116,15 +117,19 @@ const Profile = (props) => {
         </div>
         <div className="col">
           <div className="row ">
-            <span>
+            <div>
               <h1>{props.userData.user.name}</h1>
-              <span>
-                <p className="text-secondary">
-                  {" "}
-                  ({props.userData.user.email}){" "}
-                </p>
-              </span>
-            </span>
+              <p className="text-secondary"> ({props.userData.user.email}) </p>
+            </div>
+            <Link href="/family">
+              <button className="btn btn-dark position-relative">
+                <h2>Family</h2>
+                <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                  New
+                  <span className="visually-hidden">unread messages</span>
+                </span>
+              </button>
+            </Link>
           </div>
         </div>
       </div>
@@ -151,7 +156,7 @@ const Profile = (props) => {
         </div>
       </div>
       {isExpenses && (
-        <div className="row gap-3 p-4  mt-3 justify-content-around">
+        <div className="row gap-5 p-4  mt-3 justify-content-center">
           <h2 className="text-center">Expenses</h2>
           {props.expensesData.expenses.map((expense) => (
             <Expense key={Math.random()} expenseData={expense} />

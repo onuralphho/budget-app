@@ -2,7 +2,6 @@ import Profile from "../../components/Profile";
 import { getSession } from "next-auth/react";
 
 const ProfilePage = ({ userData, expensesData }) => {
-  
   return <Profile userData={userData} expensesData={expensesData}></Profile>;
 };
 
@@ -23,8 +22,7 @@ export const getServerSideProps = async (context) => {
     body: JSON.stringify({ emailOfUser: session.user.email }),
     headers: { "Content-Type": "application/json" },
   });
-  
-  
+
   const expensesData = await response.json();
 
   const res = await fetch(`${process.env.NEXTAUTH_URL}/api/get-user`, {

@@ -1,9 +1,9 @@
-import { useRouter } from "next/router";
+
 import AuthForm from "../../components/AuthForm";
 import { useSession, signIn, signOut,getSession } from "next-auth/react";
 
 const LoginPage = () => {
-  const router = useRouter();
+
   const { data: session } = useSession();
   
   return <AuthForm session={session} signIn={signIn} signOut={signOut}/>;
