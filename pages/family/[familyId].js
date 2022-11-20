@@ -118,7 +118,7 @@ const ProductDetail = ({ familyDetails }) => {
               <ul className="list-group ">
                 {familyDetails.family.members.map((member) => (
                   <li
-                    key={Math.random()}
+                    key={Math.random() * Date.now()}
                     className=" fs-5 border-bottom p-2"
                     style={{ listStyleType: "none" }}
                   >
@@ -147,7 +147,7 @@ const ProductDetail = ({ familyDetails }) => {
                   style={{ maxHeight: "20rem" }}
                 >
                   {familyDetails.family.expenses.map((expense) => (
-                    <FamilyExpenses key={Math.random()} expense={expense} />
+                    <FamilyExpenses key={Math.random() * Date.now()} expense={expense} />
                   ))}
                 </tbody>
               </table>
