@@ -147,7 +147,7 @@ const ProductDetail = ({ familyDetails }) => {
                   style={{ maxHeight: "20rem" }}
                 >
                   {familyDetails.family.expenses.map((expense) => (
-                    <FamilyExpenses expense={expense} />
+                    <FamilyExpenses key={Math.random()} expense={expense} />
                   ))}
                 </tbody>
               </table>

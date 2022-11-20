@@ -172,10 +172,10 @@ const Profile = (props) => {
           </div>
           {ascendingOrder ? _.sortBy(props.expensesData.expenses,'date').slice(0).reverse().map((expense) => (
             
-            <Expense key={Math.random()} expenseData={expense} />
+            <Expense key={expense._id} expenseData={expense} />
           )) : _.sortBy(props.expensesData.expenses,'date').map((expense) => (
             
-            <Expense key={Math.random()} expenseData={expense} />
+            <Expense key={expense._id} expenseData={expense} />
           )) }
           
         </div>
