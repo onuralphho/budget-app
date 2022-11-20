@@ -1,16 +1,23 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { useSession, getSession } from "next-auth/react";
 import Link from "next/link";
 import Families from "../../components/Families";
+import { MdCheck } from "react-icons/md";
 import { useRouter } from "next/router";
+import { sleep } from "../../utils/sleep";
 const FamilyPage = ({ familyData }) => {
-  const nameRef = useRef();
   const { data: session } = useSession();
+  const nameRef = useRef();
+  
   const router = useRouter();
-  const formSubmitHandler = (e) => {
+  const [loading, setLoading] = useState();
+  const [complete, setComplete] = useState();
+
+  const formSubmitHandler = async (e) => {
     e.preventDefault();
+    setLoading(true);
     const date = Date.now();
-    const res = fetch("api/add-family", {
+    const res = await fetch("api/add-family", {
       method: "POST",
       body: JSON.stringify({
         owner: session.user.email,
@@ -21,12 +28,18 @@ const FamilyPage = ({ familyData }) => {
       }),
       headers: { "Content-Type": "application/json" },
     });
+    setLoading(false);
+    setComplete(true);
+
+    await sleep(1000);
+
+    setComplete(false);
 
     router.replace("/family");
   };
 
   return (
-    <div className="container shadow rounded-4 p-5">
+    <div className="container shadow rounded-4 p-5 ">
       <div className="row">
         <div className="row">
           <div className="col">
@@ -59,20 +72,34 @@ const FamilyPage = ({ familyData }) => {
               />
             </div>
             <div className="row">
-              <button type="submit" className="btn btn-primary">
-                Submit your family !
+              <button
+                type="submit"
+                className={`btn btn-primary ${complete && "btn-success"}`}
+                style={{ transition: "all 0.6s ease-ot" }}
+              >
+                {loading ? (
+                  <span className="spinner-border spinner-border-sm"></span>
+                ) : complete ? (
+                  <>
+                    <span>Family Submited</span> <MdCheck size={20} />
+                  </>
+                ) : (
+                  <span>Submit Your Family!</span>
+                )}
               </button>
             </div>
           </div>
         </form>
       </div>
-      
+
       {familyData && (
         <div className="row mt-4 gap-3 justify-content-evenly">
-          {familyData.families.map((family) => (
-            
-            <Families key={family._id} family={family}></Families>
-          ))}
+          {familyData.families
+            .slice(0)
+            .reverse()
+            .map((family) => (
+              <Families key={family._id} family={family}></Families>
+            ))}
         </div>
       )}
     </div>
@@ -99,7 +126,7 @@ export const getServerSideProps = async (context) => {
   });
 
   const familyData = await response.json();
-  
+
   return {
     props: {
       familyData,

@@ -1,14 +1,20 @@
 import { useRef, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useSession, getSession } from "next-auth/react";
+import { getSession, useSession } from "next-auth/react";
+import FamilyExpenses from "../../components/FamilyExpenses";
+
 const ProductDetail = ({ familyDetails }) => {
   const [isAddNewMember, setIsNewMember] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-
+  const { data: session } = useSession();
+  const sessionOwner = session.user.email;
   const emailRef = useRef();
   const router = useRouter();
   const refreshData = () => router.replace(router.asPath);
+
+  console.log(familyDetails.family);
+
   const memberAddFormHandler = async (e) => {
     e.preventDefault();
     console.log(familyDetails.family._id);
@@ -26,7 +32,7 @@ const ProductDetail = ({ familyDetails }) => {
   };
 
   return (
-    <div className="container shadow-lg  rounded-4 p-4">
+    <div className="container shadow-lg  rounded-4 p-0 p-md-4">
       <div className="row justify-content-center">
         <div className="row">
           <div className="col">
@@ -46,27 +52,15 @@ const ProductDetail = ({ familyDetails }) => {
           }`}
         >
           <div
-            onClick={() => {
-              setIsNewMember(false);
-            }}
+            onClick={() => {}}
             className="col-md-3 fs-5 fw-bold  "
             style={{ cursor: "pointer" }}
           >
             <span>Home Page</span>
           </div>
+
           <div
-            onClick={() => {
-              setIsNewMember(true);
-            }}
-            className="col-md-3  fs-5 fw-bold"
-            style={{ cursor: "pointer" }}
-          >
-            <span>Add Member</span>
-          </div>
-          <div
-            onClick={() => {
-              setIsNewMember(false);
-            }}
+            onClick={() => {}}
             className="col-md-3  fs-5 fw-bold"
             style={{ cursor: "pointer" }}
           >
@@ -74,7 +68,7 @@ const ProductDetail = ({ familyDetails }) => {
           </div>
         </div>
 
-        <div className="row p-3">
+        <div className="row p-3 justify-content-center">
           <div className="row text-center">
             <Link
               href="/family"
@@ -82,15 +76,50 @@ const ProductDetail = ({ familyDetails }) => {
               style={{ minWidth: "2rem", minHeight: "2rem" }}
             ></Link>
             <h1>{familyDetails.family.name}</h1>
+            {isAddNewMember && (
+              <div className="row justify-content-center">
+                <form
+                  onSubmit={memberAddFormHandler}
+                  className="col-md-6 d-flex gap-2"
+                >
+                  <input
+                    ref={emailRef}
+                    className="form-control"
+                    placeholder="Add New Member By Email"
+                    type="email"
+                  />
+                  <button type="submit" className="btn btn-primary">
+                    Save
+                  </button>
+                </form>
+              </div>
+            )}
           </div>
-          <div className="row justify-content-md-start p-3">
-            <div className="col-md-4 border p-3 rounded-4 shadow text-center ">
-              <h4>Members</h4>
+          <div className="row gap-3 justify-content-md-start p-3">
+            <div className="col-md-4 border p-3 rounded-4 shadow text-center">
+              <div className="col">
+                <span>
+                  <h4>Members</h4>
+                </span>
+              </div>
+
+              {familyDetails.family.owner === sessionOwner && (
+                <div className="col">
+                  <button
+                    onClick={() => {
+                      setIsNewMember(!isAddNewMember);
+                    }}
+                    className="btn btn-primary  bottom-0 mb-2 "
+                  >
+                    Add a member
+                  </button>
+                </div>
+              )}
               <ul className="list-group ">
                 {familyDetails.family.members.map((member) => (
                   <li
                     key={Math.random()}
-                    className=" fs-5"
+                    className=" fs-5 border-bottom p-2"
                     style={{ listStyleType: "none" }}
                   >
                     {member}
@@ -98,25 +127,32 @@ const ProductDetail = ({ familyDetails }) => {
                 ))}
               </ul>
             </div>
-          </div>
-          {isAddNewMember && (
-            <div className="row justify-content-center">
-              <form
-                onSubmit={memberAddFormHandler}
-                className="col-md-6 d-flex gap-2"
-              >
-                <input
-                  ref={emailRef}
-                  className="form-control"
-                  placeholder="Add New Member By Email"
-                  type="email"
-                />
-                <button type="submit" className="btn btn-primary">
-                  Save
-                </button>
-              </form>
+
+            <div
+              className="CardEffect col bg-dark border p-3 rounded-4 shadow overflow-auto"
+              style={{ maxHeight: "20rem", }}
+            >
+              <h4 className="text-center text-white border-bottom pb-2">Family Expenses</h4>
+              <table className="table table-dark  table-bordered  table-striped table-sm  ">
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Title</th>
+                    <th>Amount</th>
+                    <th>Date</th>
+                  </tr>
+                </thead>
+                <tbody
+                  className="overflow-auto h-100"
+                  style={{ maxHeight: "20rem" }}
+                >
+                  {familyDetails.family.expenses.map((expense) => (
+                    <FamilyExpenses expense={expense} />
+                  ))}
+                </tbody>
+              </table>
             </div>
-          )}
+          </div>
         </div>
       </div>
     </div>
@@ -166,6 +202,7 @@ export const getServerSideProps = async (context) => {
 
   return {
     props: {
+      session,
       familyDetails,
     },
   };

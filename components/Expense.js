@@ -1,11 +1,47 @@
-const Expense = (props) => {
- const date = props.expenseData.date.split("T")
- 
+import { useRouter } from "next/router";
+import { useState } from "react";
 
+const Expense = (props) => {
+  const router = useRouter();
+  const refreshData = () => router.replace(router.asPath);
+  const date = props.expenseData.date.split("T");
+  const [notification, setNotification] = useState({
+    status: null,
+    message: null,
+  });
+
+  const deleteHandler = async (e) => {
+    e.preventDefault();
+
+    const res = await fetch("api/get-expenses", {
+      method: "DELETE",
+      body: JSON.stringify({
+        id: props.expenseData._id,
+      }),
+      headers: { "Content-Type": "application/json" },
+    });
+
+    const data = await res.json();
+    setNotification(data);
+    console.log(data);
+    refreshData();
+  };
 
   return (
-  
-      <div  className="CardEffect col-md-4 col-xl-3 border rounded-5 shadow p-3" >
+    <>
+      {notification.status === "ok" && (
+        <div className="col-2 rounded-4 bg-white d-none d-md-block bottom-0 end-0 fw-bold  position-absolute shadow-lg fs-5 p-3 text-success  text-center">
+          {notification.message}
+        </div>
+      )}
+
+      <div className="CardEffect col-md-4 col-xl-3 border rounded-5 shadow p-3">
+        <div className="row justify-content-end pe-3">
+          <button
+            onClick={deleteHandler}
+            className="btn btn-close position-relative"
+          ></button>
+        </div>
         <div className="row">
           <div className="col-6">
             <img
@@ -16,8 +52,10 @@ const Expense = (props) => {
           </div>
           <div className="col-6 mt-2">
             <div className="row">
-             
-              <h5 className="fw-bold"> {props.expenseData.title.toUpperCase()}</h5>
+              <h5 className="fw-bold">
+                {" "}
+                {props.expenseData.title.toUpperCase()}
+              </h5>
             </div>
             <div className="row">
               <h5 className=" text-danger">${props.expenseData.amount}</h5>
@@ -31,6 +69,7 @@ const Expense = (props) => {
           </div>
         </div>
       </div>
+    </>
   );
 };
 

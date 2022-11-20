@@ -3,12 +3,7 @@ import families from "../../model/familySchema";
 
 const handler3 = async (req, res) => {
   connectMongo().catch((error) => res.json({ error: "Connection failed!" }));
-  if (req.method === "GET") {
-    families.find(function (err, data) {
-      res.status(201).json({ families: data });
-    });
-    return;
-  }
+ 
 
   if (req.method === "POST") {
 

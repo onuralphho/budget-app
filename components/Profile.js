@@ -6,6 +6,10 @@ import { sleep } from "../utils/sleep";
 import Expense from "./Expense";
 import { useRouter } from "next/router";
 import Link from "next/link";
+import _ from 'lodash';
+import { HiSortAscending } from "react-icons/hi";
+import { HiSortDescending } from "react-icons/hi";
+
 const Profile = (props) => {
   const { data: session } = useSession();
   const [isNewExpense, setIsNewExpense] = useState(false);
@@ -18,9 +22,13 @@ const Profile = (props) => {
   const [showPpChanger, setShowPpChanger] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isExpenseSaved, setIsExpenseSave] = useState(false);
+  const [ascendingOrder,setAscendingOrder] = useState(true)
 
   const router = useRouter();
   const refreshData = () => router.replace(router.asPath);
+
+
+  
   const submitFormHandler = async (e) => {
     setIsLoading(true);
     e.preventDefault();
@@ -157,10 +165,19 @@ const Profile = (props) => {
       </div>
       {isExpenses && (
         <div className="row gap-5 p-4  mt-3 justify-content-center">
-          <h2 className="text-center">Expenses</h2>
-          {props.expensesData.expenses.map((expense) => (
+          <div className="row">
+          {props.expensesData.expenses.length === 0 ? <h2 className="text-center">No expense founded! Add one!</h2> :<span className="text-end "><button onClick={() => {
+            setAscendingOrder(!ascendingOrder)
+          }} className="btn">{ascendingOrder ? <HiSortAscending size={40}/> : <HiSortDescending size={40}/>}</button></span>}
+          </div>
+          {ascendingOrder ? _.sortBy(props.expensesData.expenses,'date').slice(0).reverse().map((expense) => (
+            
             <Expense key={Math.random()} expenseData={expense} />
-          ))}
+          )) : _.sortBy(props.expensesData.expenses,'date').map((expense) => (
+            
+            <Expense key={Math.random()} expenseData={expense} />
+          )) }
+          
         </div>
       )}
       {isNewExpense && (

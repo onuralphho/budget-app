@@ -1,6 +1,8 @@
 import Error from "../svg/Error.svg";
 import Link from "next/link";
+import { useRouter } from "next/router";
 const Page_404 = () => {
+  const router = useRouter()
   return (
     <div className="container  ">
       <div className="row" style={{height:'70vh'}}>
@@ -12,11 +14,13 @@ const Page_404 = () => {
           </div>
           <div className="row text-center p-3">
             <h1>You have found a page that does not exist!</h1>
-            <Link href="/">
-              <button className="btn btn-primary mt-2">
+              <span>
+              <button onClick={() => {
+                router.back()
+              }} className="btn w btn-primary mt-2">
                 Come Back To Reality!
-              </button>
-            </Link>
+              </button></span>
+           
           </div>
         </div>
       </div>
