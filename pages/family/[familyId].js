@@ -39,16 +39,16 @@ const ProductDetail = ({ familyDetails }) => {
   };
 
   return (
-    <>
-      <div className="container-me shadow-lg  rounded-4 p-0 p-md-5 mb-5 mb-md-0">
-        <div className="row justify-content-center">
+    
+      <div className="container-me shadow-lg   rounded-4  ps-3 p-md-5 mb-5 mb-md-0">
+        <div className="row justify-content-center ">
           <div className="row">
-            <div className="col">
+            <div className="col mt-3 d-md-none">
               <button
                 onClick={() => {
                   setIsMenuOpen(!isMenuOpen);
                 }}
-                className="btn btn-dark d-md-none"
+                className="btn btn-dark "
               >
                 Menu
               </button>
@@ -111,11 +111,11 @@ const ProductDetail = ({ familyDetails }) => {
                   </div>
                 )}
               </div>
-              <div className="row gap-3 justify-content-md-start p-3 flex-row-reverse">
+              <div className="row gap-3 justify-content-md-start p-0 pb-5 flex-row-reverse ">
                
 
                 <div
-                  className="CardEffect col bg-dark border p-3 rounded-4 shadow overflow-auto"
+                  className="CardEffect col bg-dark border p-3 rounded-4 shadow overflow-auto "
                   style={{ maxHeight: "20rem" }}
                 >
                   <h4 className="text-center text-white border-bottom pb-2">
@@ -229,7 +229,7 @@ const ProductDetail = ({ familyDetails }) => {
           )}
         </div>
       </div>
-    </>
+    
   );
 };
 

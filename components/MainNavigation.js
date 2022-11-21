@@ -121,11 +121,11 @@ const MainNavigation = () => {
       </nav>
       <div
         className="container d-sm-none position-fixed bottom-0 "
-        style={{ zIndex: "999" }}
+        style={{ zIndex: "999"}}
       >
         <div
-          className=" row vw-100 bg-dark text-center rounded-top align-items-center "
-          style={{ minHeight: "3.5rem" }}
+          className=" row vw-100 bg-dark text-center  align-items-center "
+          style={{ minHeight: "3.5rem", borderTopLeftRadius:'1.8rem', borderTopRightRadius:'1.8rem' }}
         >
           <div className="col fs-4 text-white ">
             <Link className="text-white text-decoration-none" href="/">
