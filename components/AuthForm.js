@@ -31,7 +31,7 @@ const AuthForm = (props) => {
   };
 
   return (
-    <div className="container mt-5 mb-5 d-flex justify-content-center">
+    <div className="container mt-5 mb-5 d-flex justify-content-center pt-0 pt-md-5">
       <div className="row w-100   justify-content-center">
         <div className="col-md-5 ">
           <AuthSvg />
@@ -46,11 +46,11 @@ const AuthForm = (props) => {
                       className=" text-decoration-none btn btn-primary fw-semibold"
                       href="/register"
                     >
-                      {" "}
+                     
                       Register!
                     </Link>
-                  </span>{" "}
-                  / Login{" "}
+                  </span>
+                  / Login
                 </h2>
                 <div className="row">
                   <div className="col-sm-12 ">
@@ -127,7 +127,7 @@ const AuthForm = (props) => {
                     }}
                     className="btn btn-dark btn-block confirm-button mb-2 align-items-center"
                   >
-                    <span className=" fw-bold "> Login with Git-Hub</span>
+                    <span className=" fw-bold "> Continue with Git-Hub</span>
                     <BsGithub className="ms-2" size={30}></BsGithub>
                   </button>
                 </div>
@@ -141,7 +141,7 @@ const AuthForm = (props) => {
                     }}
                     className=" btn btn-block confirm-button border"
                   >
-                    <span className="fw-bold text-black-50"> Login with</span>
+                    <span className="fw-bold text-black-50"> Continue with</span>
                     <FcGoogle className="ms-2" size={30}></FcGoogle>
                   </button>
                 </div>

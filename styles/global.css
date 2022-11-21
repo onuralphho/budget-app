@@ -9,3 +9,31 @@
 .CardEffect:hover{
     scale: 1.05;
 }
+
+.container-me {
+    width: 100%;
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+} 
+@media (min-width: 576px) {
+    .container-me {
+        width: 640px;
+    }
+}
+@media (min-width: 1008px) {
+    .container-me {
+        width: 1020px;
+    }
+}
+@media (min-width: 1292px) {
+    .container-me {
+        width: 1360px;
+    }
+}
+@media (min-width: 1600px) {
+    .container-me {
+        width: 1640px;
+    }
+}

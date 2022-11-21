@@ -3,21 +3,28 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { getSession, useSession } from "next-auth/react";
 import FamilyExpenses from "../../components/FamilyExpenses";
+import AddFamilyExpense from "../../components/AddFamilyExpense";
+import _ from "lodash";
+import { TbArrowsSort } from "react-icons/tb";
 
 const ProductDetail = ({ familyDetails }) => {
   const [isAddNewMember, setIsNewMember] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isAddExpense, setIsAddExpense] = useState(false);
   const { data: session } = useSession();
-  const sessionOwner = session.user.email;
+  const sessionOwner = { email: session.user.email, name: session.user.name };
   const emailRef = useRef();
   const router = useRouter();
+  const [amountAscendingOrder, setAmountAscendingOrder] = useState(false);
+  const [dateAscendingOrder, setDateAscendingOrder] = useState(false);
+  const [checkSort, setCheckSort] = useState(false);
   const refreshData = () => router.replace(router.asPath);
 
-  console.log(familyDetails.family);
+
 
   const memberAddFormHandler = async (e) => {
     e.preventDefault();
-    console.log(familyDetails.family._id);
+    
     const res = await fetch("/api/add-family-member", {
       method: "POST",
       body: JSON.stringify({
@@ -32,130 +39,197 @@ const ProductDetail = ({ familyDetails }) => {
   };
 
   return (
-    <div className="container shadow-lg  rounded-4 p-0 p-md-4">
-      <div className="row justify-content-center">
-        <div className="row">
-          <div className="col">
-            <button
+    <>
+      <div className="container-me shadow-lg  rounded-4 p-0 p-md-5 mb-5 mb-md-0">
+        <div className="row justify-content-center">
+          <div className="row">
+            <div className="col">
+              <button
+                onClick={() => {
+                  setIsMenuOpen(!isMenuOpen);
+                }}
+                className="btn btn-dark d-md-none"
+              >
+                Menu
+              </button>
+            </div>
+          </div>
+          <div
+            className={`row m-2 p-2 justify-content-around rounded-4 gap-2 w-75 text-center bg-dark text-white ${
+              isMenuOpen ? "d-flex" : "d-none d-md-flex"
+            }`}
+          >
+            <div
               onClick={() => {
-                setIsMenuOpen(!isMenuOpen);
+                setIsAddExpense(false);
               }}
-              className="btn btn-dark d-md-none"
+              className="col-md-3 fs-5 fw-bold  "
+              style={{ cursor: "pointer" }}
             >
-              Menu
-            </button>
-          </div>
-        </div>
-        <div
-          className={`row m-2 p-2 justify-content-around rounded-4 gap-2   text-center bg-dark text-white ${
-            isMenuOpen ? "d-flex" : "d-none d-md-flex"
-          }`}
-        >
-          <div
-            onClick={() => {}}
-            className="col-md-3 fs-5 fw-bold  "
-            style={{ cursor: "pointer" }}
-          >
-            <span>Home Page</span>
-          </div>
+              <span>Home Page</span>
+            </div>
 
-          <div
-            onClick={() => {}}
-            className="col-md-3  fs-5 fw-bold"
-            style={{ cursor: "pointer" }}
-          >
-            <span>Add Expense</span>
+            <div
+              onClick={() => {
+                setIsAddExpense(true);
+              }}
+              className="col-md-3  fs-5 fw-bold"
+              style={{ cursor: "pointer" }}
+            >
+              <span>Add Expense</span>
+            </div>
           </div>
-        </div>
-
-        <div className="row p-3 justify-content-center">
-          <div className="row text-center">
+          <div className="row ps-4 pt-3">
             <Link
               href="/family"
               className="btn btn-close bg-danger"
               style={{ minWidth: "2rem", minHeight: "2rem" }}
             ></Link>
-            <h1>{familyDetails.family.name}</h1>
-            {isAddNewMember && (
-              <div className="row justify-content-center">
-                <form
-                  onSubmit={memberAddFormHandler}
-                  className="col-md-6 d-flex gap-2"
-                >
-                  <input
-                    ref={emailRef}
-                    className="form-control"
-                    placeholder="Add New Member By Email"
-                    type="email"
-                  />
-                  <button type="submit" className="btn btn-primary">
-                    Save
-                  </button>
-                </form>
-              </div>
-            )}
           </div>
-          <div className="row gap-3 justify-content-md-start p-3">
-            <div className="col-md-4 border p-3 rounded-4 shadow text-center">
-              <div className="col">
-                <span>
-                  <h4>Members</h4>
-                </span>
+          {isAddExpense && <AddFamilyExpense session={sessionOwner} />}
+          {!isAddExpense && (
+            <div className="row p-3 justify-content-center ">
+              <div className="row text-center">
+                <h1>{familyDetails.family.name}</h1>
+
+                {isAddNewMember && (
+                  <div className="row justify-content-center">
+                    <form
+                      onSubmit={memberAddFormHandler}
+                      className="col-md-6 d-flex gap-2"
+                    >
+                      <input
+                        ref={emailRef}
+                        className="form-control"
+                        placeholder="Add New Member By Email"
+                        type="email"
+                      />
+                      <button type="submit" className="btn btn-primary">
+                        Save
+                      </button>
+                    </form>
+                  </div>
+                )}
               </div>
+              <div className="row gap-3 justify-content-md-start p-3 flex-row-reverse">
+               
 
-              {familyDetails.family.owner === sessionOwner && (
-                <div className="col">
-                  <button
-                    onClick={() => {
-                      setIsNewMember(!isAddNewMember);
-                    }}
-                    className="btn btn-primary  bottom-0 mb-2 "
-                  >
-                    Add a member
-                  </button>
-                </div>
-              )}
-              <ul className="list-group ">
-                {familyDetails.family.members.map((member) => (
-                  <li
-                    key={Math.random() * Date.now()}
-                    className=" fs-5 border-bottom p-2"
-                    style={{ listStyleType: "none" }}
-                  >
-                    {member}
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            <div
-              className="CardEffect col bg-dark border p-3 rounded-4 shadow overflow-auto"
-              style={{ maxHeight: "20rem", }}
-            >
-              <h4 className="text-center text-white border-bottom pb-2">Family Expenses</h4>
-              <table className="table table-dark  table-bordered  table-striped table-sm  ">
-                <thead>
-                  <tr>
-                    <th>Name</th>
-                    <th>Title</th>
-                    <th>Amount</th>
-                    <th>Date</th>
-                  </tr>
-                </thead>
-                <tbody
-                  className="overflow-auto h-100"
+                <div
+                  className="CardEffect col bg-dark border p-3 rounded-4 shadow overflow-auto"
                   style={{ maxHeight: "20rem" }}
                 >
-                  {familyDetails.family.expenses.map((expense) => (
-                    <FamilyExpenses key={Math.random() * Date.now()} expense={expense} />
-                  ))}
-                </tbody>
-              </table>
+                  <h4 className="text-center text-white border-bottom pb-2">
+                    Family Expenses
+                  </h4>
+                  <table className="table table-dark  table-bordered  table-striped table-sm  ">
+                    <thead>
+                      <tr className="">
+                        <th className=" align-baseline">Name</th>
+                        <th className=" align-baseline">Title</th>
+                        <th className=" align-baseline ">
+                          <span
+                            onClick={() => {
+                              setCheckSort(true);
+                              setAmountAscendingOrder(!amountAscendingOrder);
+                            }}
+                            className="btn text-white align-baseline"
+                          >
+                            <TbArrowsSort size={20} />
+                          </span>
+                          Amount
+                        </th>
+                        <th className=" align-baseline"><span
+                            onClick={() => {
+                              setCheckSort(false);
+                              setDateAscendingOrder(!dateAscendingOrder);
+                            }}
+                            className="btn text-white align-baseline"
+                          >
+                            <TbArrowsSort size={20} />
+                          </span>Date</th>
+                      </tr>
+                    </thead>
+                    <tbody
+                      className="overflow-auto h-100"
+                      style={{ maxHeight: "20rem" }}
+                    >
+                      {checkSort ? amountAscendingOrder
+                        ? _.sortBy(familyDetails.family.expenses, "amount").map(
+                            (expense) => (
+                              <FamilyExpenses
+                                key={Math.random() * Date.now()}
+                                expense={expense}
+                              />
+                            )
+                          )
+                        : _.sortBy(familyDetails.family.expenses, "amount")
+                            .slice(0)
+                            .reverse()
+                            .map((expense) => (
+                              <FamilyExpenses
+                                key={Math.random() * Date.now()}
+                                expense={expense}
+                              />
+                            )):null}
+                            
+                      {!checkSort ? dateAscendingOrder
+                        ? _.sortBy(familyDetails.family.expenses, "date").map(
+                            (expense) => (
+                              <FamilyExpenses
+                                key={Math.random() * Date.now()}
+                                expense={expense}
+                              />
+                            )
+                          )
+                        : _.sortBy(familyDetails.family.expenses, "date")
+                            .slice(0)
+                            .reverse()
+                            .map((expense) => (
+                              <FamilyExpenses
+                                key={Math.random() * Date.now()}
+                                expense={expense}
+                              />
+                            )):null}
+                    </tbody>
+                  </table>
+                </div>
+                <div className="col-md-4 border p-3 rounded-4 shadow text-center overflow-auto" style={{ maxHeight: "20rem" }}>
+                  <div className="col">
+                    <span>
+                      <h4>Members</h4>
+                    </span>
+                  </div>
+                  
+                  {familyDetails.family.owner === sessionOwner.email && (
+                    <div className="col">
+                      <button
+                        onClick={() => {
+                          setIsNewMember(!isAddNewMember);
+                        }}
+                        className="btn btn-primary  bottom-0 mb-2 "
+                      >
+                        Add a member
+                      </button>
+                    </div>
+                  )}
+                  <ul className="list-group ">
+                    {familyDetails.family.members.map((member) => (
+                      <li
+                        key={Math.random() * Date.now()}
+                        className=" fs-5 border-bottom p-2"
+                        style={{ listStyleType: "none" }}
+                      >
+                        {member}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
             </div>
-          </div>
+          )}
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

@@ -54,7 +54,7 @@ const Profile = (props) => {
       title: enteredTitle,
       date: enteredDate,
     };
-    console.log(obj.date);
+    
     const response = await fetch("/api/add-expense", {
       method: "POST",
       body: JSON.stringify(obj),
@@ -83,8 +83,8 @@ const Profile = (props) => {
   };
 
   return (
-    <div className="container  shadow rounded-5 p-4">
-      <div className="row justify-content-center ">
+    <div className="container shadow rounded-5 p-4" >
+      <div className="row justify-content-center " >
         <div
           style={{ minWidth: "20rem" }}
           className=" col-sm-3 rounded-3 col-md-3 text-center"
@@ -134,7 +134,7 @@ const Profile = (props) => {
                 <h2>Family</h2>
                 <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
                   New
-                  <span className="visually-hidden">unread messages</span>
+                  <span className="visually-hidden">new functions</span>
                 </span>
               </button>
             </Link>
@@ -164,7 +164,7 @@ const Profile = (props) => {
         </div>
       </div>
       {isExpenses && (
-        <div className="row gap-5 p-4  mt-3 justify-content-center">
+        <div className="row gap-5 p-4  mt-3 justify-content-center mb-5 mb-md-0 " >
           <div className="row">
           {props.expensesData.expenses.length === 0 ? <h2 className="text-center">No expense founded! Add one!</h2> :<span className="text-end "><button onClick={() => {
             setAscendingOrder(!ascendingOrder)
@@ -181,7 +181,7 @@ const Profile = (props) => {
         </div>
       )}
       {isNewExpense && (
-        <div className="row mt-3 justify-content-center gap-5">
+        <div className="row mt-3 justify-content-center gap-5 mb-5 mb-md-0">
           <div className="col-md-4">
             <AddExpenseSVG />
           </div>
@@ -207,6 +207,7 @@ const Profile = (props) => {
                 ref={amountRef}
                 placeholder='"$10"'
                 type="number"
+                step="any"
                 min={1}
                 className=" form-control mb-3"
               />

@@ -23,7 +23,7 @@ const Expense = (props) => {
 
     const data = await res.json();
     setNotification(data);
-    console.log(data);
+    
     refreshData();
   };
 
@@ -58,7 +58,7 @@ const Expense = (props) => {
               </h5>
             </div>
             <div className="row">
-              <h5 className=" text-danger">${props.expenseData.amount}</h5>
+              <h5 className={`${props.expenseData.amount >100 ? 'text-danger' : props.expenseData.amount > 50 ? 'text-warning' : props.expenseData.amount > 0 ?'text-success' : ''}`}>${props.expenseData.amount}</h5>
             </div>
             <div className="row">
               <div className="col fst-italic">{props.expenseData.name} </div>

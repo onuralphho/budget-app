@@ -10,7 +10,7 @@ const MainNavigation = () => {
   const { data: session } = useSession();
   return (
     <>
-      <nav className=" container-fluid bg-dark text-white mb-3 ">
+      <nav className=" container-fluid bg-dark text-white mb-3 d-none d-sm-block">
         <div className="container">
           <div className="row justify-content-between">
             <div className="col-md-5">
@@ -39,6 +39,7 @@ const MainNavigation = () => {
                     </h5>
                   </Link>
                 </div>
+
                 {session && (
                   <div className="col-6 col-md-2">
                     <div className="row">
@@ -60,7 +61,6 @@ const MainNavigation = () => {
                     </div>
 
                     {session && profileShow && (
-                      
                       <div className="row">
                         <div className="col">
                           <ul
@@ -76,6 +76,9 @@ const MainNavigation = () => {
                               <Link
                                 href="/profile"
                                 className="link-dark text-decoration-none"
+                                onClick={() => {
+                                  setProfileShow(false);
+                                }}
                               >
                                 Profile
                               </Link>
@@ -83,7 +86,7 @@ const MainNavigation = () => {
                             <li
                               style={{ cursor: "pointer" }}
                               onClick={() => {
-                                signOut();
+                                signOut({ callbackUrl: "/" });
                               }}
                               className="list-group-item text-danger"
                             >
@@ -116,12 +119,58 @@ const MainNavigation = () => {
           </div>
         </div>
       </nav>
-      <div className="container d-sm-none position-fixed bottom-0 " style={{zIndex:'999'}}>
-        <div className=" row vw-100 bg-primary text-center rounded-top align-items-center " style={{minHeight:'3.5rem'}}>
-        <div className="col fs-4 text-white "><Link className="text-white text-decoration-none" href="/">Home</Link></div>
-        <div className="col-2 fs-4 text-white bg-white rounded-pill" ><Link className="text-white text-decoration-none " href="/login"><FcDoughnutChart size={40} /></Link></div>
-        <div className="col fs-4 text-white "><Link className="text-white text-decoration-none" href="/profile">Profile</Link></div>
-        
+      <div
+        className="container d-sm-none position-fixed bottom-0 "
+        style={{ zIndex: "999" }}
+      >
+        <div
+          className=" row vw-100 bg-dark text-center rounded-top align-items-center "
+          style={{ minHeight: "3.5rem" }}
+        >
+          <div className="col fs-4 text-white ">
+            <Link className="text-white text-decoration-none" href="/">
+              Home
+            </Link>
+          </div>
+          <div className="col-2 fs-4 text-white ">
+            <Link className="text-white text-decoration-none " href="/login">
+              {!session ? (
+                <FcDoughnutChart size={40} className="CardEffect" />
+              ) : (
+                <img
+                  onClick={() => {
+                    setProfileShow(!profileShow);
+                  }}
+                  className="img-fluid"
+                  src={session.user.image}
+                  alt="profile picture"
+                  style={{
+                    maxWidth: "2.5rem",
+                    borderRadius: "2rem",
+                    cursor: "pointer",
+                  }}
+                />
+              )}
+            </Link>
+          </div>
+          <div className="col fs-4 text-white ">
+            {session ? (
+              <Link className="text-white text-decoration-none" href="/profile">
+                <span
+                  onClick={() => {
+                    signOut({ callbackUrl: "/" });
+                  }}
+                  className="text-danger"
+                >
+                  Log Out
+                </span>
+              </Link>
+            ) : (
+              <Link className="text-white text-decoration-none" href="/login">
+                <span className="">Sign In</span>
+              </Link>
+            )}
+          </div>
         </div>
       </div>
     </>

@@ -93,7 +93,7 @@ const FamilyPage = ({ familyData }) => {
       </div>
 
       {familyData && (
-        <div className="row mt-4 gap-3 justify-content-evenly">
+        <div className="row pb-5 pb-md-0 mt-4 gap-3 justify-content-evenly">
           {familyData.families
             .slice(0)
             .reverse()

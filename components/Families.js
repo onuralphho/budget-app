@@ -18,7 +18,7 @@ const Families = (props) => {
       <div className="row p-3 ">
         <h2 className="">{props.family.name}</h2>
         <h5>Members</h5>
-        <div className="row text-start overflow-hidden">
+        <div className="row text-start overflow-hidden overflow-scroll shadow-lg  m-auto rounded-4 mb-2" style={{maxHeight:'8rem'}} >
         {props.family.members.map((member) => (
           <p key={member}>{member}</p>
         ))}</div>

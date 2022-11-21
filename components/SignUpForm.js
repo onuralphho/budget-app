@@ -221,7 +221,7 @@ const [isLoading, setIsLoading] = useState(false);
                     }}
                     className="btn btn-dark btn-block confirm-button mb-2 align-items-center"
                   >
-                    <span className=" fw-bold "> Register with Git-Hub</span>
+                    <span className=" fw-bold "> Continue with Git-Hub</span>
                     <BsGithub className="ms-2" size={30}></BsGithub>
                   </button>
                 </div>
@@ -235,7 +235,7 @@ const [isLoading, setIsLoading] = useState(false);
                     }}
                     className=" btn btn-block  confirm-button border"
                   >
-                    <span className="fw-bold text-black-50"> Register with</span>
+                    <span className="fw-bold text-black-50"> Continue with</span>
                     <FcGoogle className="ms-2" size={30}></FcGoogle>
                   </button>
                 </div>
