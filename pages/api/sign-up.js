@@ -18,7 +18,7 @@ const handler = async (req, res) => {
     if (checkExisting) {
       return res.status(422).json({ message: "User Already Exists!" });
     }
-
+    
     
     users.create(req.body,
       function (err, data) {

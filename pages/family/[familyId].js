@@ -18,13 +18,18 @@ const ProductDetail = ({ familyDetails }) => {
   const [amountAscendingOrder, setAmountAscendingOrder] = useState(false);
   const [dateAscendingOrder, setDateAscendingOrder] = useState(false);
   const [checkSort, setCheckSort] = useState(false);
+  const [fetchMessage, setFetchMessage] = useState();
   const refreshData = () => router.replace(router.asPath);
-
-
 
   const memberAddFormHandler = async (e) => {
     e.preventDefault();
-    
+    if (familyDetails.family.members.includes(emailRef.current.value)) {
+      setFetchMessage({
+        status: false,
+        message: "This user is already a member!",
+      });
+      return;
+    }
     const res = await fetch("/api/add-family-member", {
       method: "POST",
       body: JSON.stringify({
@@ -35,130 +40,120 @@ const ProductDetail = ({ familyDetails }) => {
     });
 
     const data = await res.json();
+    setFetchMessage({ status: data.status, message: data.message });
     refreshData();
   };
 
+   let totalPrice = 0
+
+   familyDetails.family.expenses.map((expense)=>(
+    totalPrice += expense.amount
+   ))
+
   return (
-    
-      <div className="container-me shadow-lg   rounded-4  ps-3 p-md-5 mb-5 mb-md-0">
-        <div className="row justify-content-center ">
-          <div className="row">
-            <div className="col mt-3 d-md-none">
-              <button
-                onClick={() => {
-                  setIsMenuOpen(!isMenuOpen);
-                }}
-                className="btn btn-dark "
-              >
-                Menu
-              </button>
-            </div>
+    <div className="container-me shadow-lg   rounded-4  ps-3 p-md-5 mb-5 mb-md-0">
+      <div className="row justify-content-center ">
+        <div className="row">
+          <div className="col mt-3 d-md-none">
+            <button
+              onClick={() => {
+                setIsMenuOpen(!isMenuOpen);
+              }}
+              className="btn btn-dark "
+            >
+              Menu
+            </button>
           </div>
+        </div>
+        <div
+          className={`row m-2 p-2 justify-content-around rounded-4 gap-2 w-75 text-center bg-dark text-white ${
+            isMenuOpen ? "d-flex" : "d-none d-md-flex"
+          }`}
+        >
           <div
-            className={`row m-2 p-2 justify-content-around rounded-4 gap-2 w-75 text-center bg-dark text-white ${
-              isMenuOpen ? "d-flex" : "d-none d-md-flex"
-            }`}
+            onClick={() => {
+              setIsAddExpense(false);
+            }}
+            className="col-md-3 fs-5 fw-bold  "
+            style={{ cursor: "pointer" }}
           >
-            <div
-              onClick={() => {
-                setIsAddExpense(false);
-              }}
-              className="col-md-3 fs-5 fw-bold  "
-              style={{ cursor: "pointer" }}
-            >
-              <span>Home Page</span>
-            </div>
-
-            <div
-              onClick={() => {
-                setIsAddExpense(true);
-              }}
-              className="col-md-3  fs-5 fw-bold"
-              style={{ cursor: "pointer" }}
-            >
-              <span>Add Expense</span>
-            </div>
+            <span>Home Page</span>
           </div>
-          <div className="row ps-4 pt-3">
-            <Link
-              href="/family"
-              className="btn btn-close bg-danger"
-              style={{ minWidth: "2rem", minHeight: "2rem" }}
-            ></Link>
+
+          <div
+            onClick={() => {
+              setIsAddExpense(true);
+            }}
+            className="col-md-3  fs-5 fw-bold"
+            style={{ cursor: "pointer" }}
+          >
+            <span>Add Expense</span>
           </div>
-          {isAddExpense && <AddFamilyExpense session={sessionOwner} />}
-          {!isAddExpense && (
-            <div className="row p-3 justify-content-center ">
-              <div className="row text-center">
-                <h1>{familyDetails.family.name}</h1>
-
-                {isAddNewMember && (
-                  <div className="row justify-content-center">
-                    <form
-                      onSubmit={memberAddFormHandler}
-                      className="col-md-6 d-flex gap-2"
-                    >
-                      <input
-                        ref={emailRef}
-                        className="form-control"
-                        placeholder="Add New Member By Email"
-                        type="email"
-                      />
-                      <button type="submit" className="btn btn-primary">
-                        Save
-                      </button>
-                    </form>
-                  </div>
-                )}
-              </div>
-              <div className="row gap-3 justify-content-md-start p-0 pb-5 flex-row-reverse ">
-               
-
-                <div
-                  className="CardEffect col bg-dark border p-3 rounded-4 shadow overflow-auto "
-                  style={{ maxHeight: "20rem" }}
-                >
-                  <h4 className="text-center text-white border-bottom pb-2">
-                    Family Expenses
-                  </h4>
-                  <table className="table table-dark  table-bordered  table-striped table-sm  ">
-                    <thead>
-                      <tr className="">
-                        <th className=" align-baseline">Name</th>
-                        <th className=" align-baseline">Title</th>
-                        <th className=" align-baseline ">
-                          <span
-                            onClick={() => {
-                              setCheckSort(true);
-                              setAmountAscendingOrder(!amountAscendingOrder);
-                            }}
-                            className="btn text-white align-baseline"
-                          >
-                            <TbArrowsSort size={20} />
-                          </span>
-                          Amount
-                        </th>
-                        <th className=" align-baseline"><span
-                            onClick={() => {
-                              setCheckSort(false);
-                              setDateAscendingOrder(!dateAscendingOrder);
-                            }}
-                            className="btn text-white align-baseline"
-                          >
-                            <TbArrowsSort size={20} />
-                          </span>Date</th>
-                      </tr>
-                    </thead>
-                    <tbody
-                      className="overflow-auto h-100"
-                      style={{ maxHeight: "20rem" }}
-                    >
-                      {checkSort ? amountAscendingOrder
+        </div>
+        <div className="row ps-4 pt-3">
+          <Link
+            href="/family"
+            className="btn btn-close bg-danger"
+            style={{ minWidth: "2rem", minHeight: "2rem" }}
+          ></Link>
+        </div>
+        {isAddExpense && <AddFamilyExpense session={sessionOwner} />}
+        {!isAddExpense && (
+          <div className="row p-3 justify-content-center ">
+            <div className="row text-center justify-content-center">
+              <h1>{familyDetails.family.name}</h1>
+            </div>
+            <div className="row gap-3 justify-content-md-start p-0 pb-5 flex-row-reverse ">
+              <div
+                className="CardEffect col bg-dark border p-0 pt-3 pb-3 p-md-3 rounded-4 shadow "
+                style={{ maxHeight: "20rem", overflowX:'hidden', }}
+              >
+                <h4 className="text-center text-white border-bottom pb-2">
+                  Family Expenses
+                </h4>
+                <table className="table table-dark  table-bordered  table-striped table-sm  ">
+                  <thead>
+                    <tr>
+                      <th className=" align-baseline">Name</th>
+                      <th className=" align-baseline">Title</th>
+                      <th className=" align-baseline ">
+                        <span
+                          onClick={() => {
+                            setCheckSort(true);
+                            setAmountAscendingOrder(!amountAscendingOrder);
+                          }}
+                          className="btn text-white align-baseline"
+                        >
+                          <TbArrowsSort size={20} />
+                        </span>
+                        Amount
+                      </th>
+                      <th className=" align-baseline">
+                        <span
+                          onClick={() => {
+                            setCheckSort(false);
+                            setDateAscendingOrder(!dateAscendingOrder);
+                          }}
+                          className="btn text-white align-baseline"
+                        >
+                          <TbArrowsSort size={20} />
+                        </span>
+                        Date
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody
+                    className="overflow-auto h-100"
+                    style={{ maxHeight: "20rem" }}
+                  >
+                    {checkSort
+                      ? amountAscendingOrder
                         ? _.sortBy(familyDetails.family.expenses, "amount").map(
                             (expense) => (
                               <FamilyExpenses
                                 key={Math.random() * Date.now()}
                                 expense={expense}
+                                familyId={familyDetails.family._id}
                               />
                             )
                           )
@@ -169,15 +164,19 @@ const ProductDetail = ({ familyDetails }) => {
                               <FamilyExpenses
                                 key={Math.random() * Date.now()}
                                 expense={expense}
+                                familyId={familyDetails.family._id}
                               />
-                            )):null}
-                            
-                      {!checkSort ? dateAscendingOrder
+                            ))
+                      : null}
+
+                    {!checkSort
+                      ? dateAscendingOrder
                         ? _.sortBy(familyDetails.family.expenses, "date").map(
                             (expense) => (
                               <FamilyExpenses
                                 key={Math.random() * Date.now()}
                                 expense={expense}
+                                familyId={familyDetails.family._id}
                               />
                             )
                           )
@@ -188,48 +187,76 @@ const ProductDetail = ({ familyDetails }) => {
                               <FamilyExpenses
                                 key={Math.random() * Date.now()}
                                 expense={expense}
+                                familyId={familyDetails.family._id}
                               />
-                            )):null}
-                    </tbody>
-                  </table>
-                </div>
-                <div className="col-md-4 border p-3 rounded-4 shadow text-center overflow-auto" style={{ maxHeight: "20rem" }}>
-                  <div className="col">
-                    <span>
-                      <h4>Members</h4>
-                    </span>
-                  </div>
+                            ))
+                      : null}
+                  </tbody>
                   
-                  {familyDetails.family.owner === sessionOwner.email && (
-                    <div className="col">
-                      <button
-                        onClick={() => {
-                          setIsNewMember(!isAddNewMember);
-                        }}
-                        className="btn btn-primary  bottom-0 mb-2 "
-                      >
-                        Add a member
-                      </button>
-                    </div>
-                  )}
-                  <ul className="list-group ">
-                    {familyDetails.family.members.map((member) => (
-                      <li
-                        key={Math.random() * Date.now()}
-                        className=" fs-5 border-bottom p-2"
-                        style={{ listStyleType: "none" }}
-                      >
-                        {member}
-                      </li>
-                    ))}
-                  </ul>
+                </table>
+                <div className="row ps-3 position-sticky  bottom-0 bg-dark bg-black rounded-4" >
+                  <span className="text-white fs-3">Total Amount: <span className="text-primary">${totalPrice}</span></span>
                 </div>
               </div>
+              
+              <div
+                className="col-md-4 border p-3 rounded-4 shadow text-center overflow-auto"
+                style={{ maxHeight: "20rem" }}
+              >
+                <div className="col">
+                  <span>
+                    <h4>Members</h4>
+                  </span>
+                </div>
+
+                {familyDetails.family.owner === sessionOwner.email && (
+                  <div className="col">
+                    <button
+                      onClick={() => {
+                        setIsNewMember(!isAddNewMember);
+                      }}
+                      className="btn btn-primary  bottom-0 mb-2 "
+                    >
+                      Add a member
+                    </button>
+                    {isAddNewMember && (
+                      <div className="row justify-content-center mb-4">
+                        <form
+                          onSubmit={memberAddFormHandler}
+                          className=" d-flex gap-2"
+                        >
+                          <input
+                            ref={emailRef}
+                            className="form-control "
+                            placeholder="Add New Member By Email"
+                            type="email"
+                          />
+                          <button type="submit" className="btn btn-primary">
+                            Save
+                          </button>
+                        </form>
+                       {fetchMessage&& <p className={`${fetchMessage.status ? 'text-success':'text-danger'}`}>{fetchMessage.message}</p>}
+                      </div>
+                    )}
+                  </div>
+                )}
+                <ul className="list-group ">
+                  {familyDetails.family.members.map((member) => (
+                    <li
+                      key={Math.random() * Date.now()}
+                      className=" fs-5 border-bottom p-2"
+                      style={{ listStyleType: "none" }}
+                    >
+                      {member}
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </div>
-          )}
-        </div>
+          </div>
+        )}
       </div>
-    
+    </div>
   );
 };
 

@@ -5,16 +5,12 @@ const Layout = (props) => {
   return (
     <Fragment>
       <MainNavigation></MainNavigation>
-      <div style={{height:'70rem'}}>{props.children}</div>
-      <div className="container-fluid border-top border-1 d-none d-md-block " >
-        <div className="container mb-5 mb-sm-0">
-          <section className="row  "style={{minHeight:'5rem'}}>
-            <div className="col my-auto  text-center ">
-              <h2>Budget App</h2>
-            </div>
-          </section>
+      <div className=" min-vh-100 ">{props.children}</div>
+      <footer class=" flex-shrink-0 py-3 bg-dark text-white-50 d-none d-md-block">
+        <div class="container text-center">
+          <small>Copyright &copy; Budget-App</small>
         </div>
-      </div>
+      </footer>
     </Fragment>
   );
 };

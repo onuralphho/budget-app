@@ -3,6 +3,7 @@ import AddExpenseSVG from "../svg/Transactional SMS.svg";
 import { sleep } from "../utils/sleep";
 import { useRouter } from "next/router";
 import { MdCheck } from "react-icons/md";
+import { v4 as uuidv4 } from "uuid";
 const AddFamilyExpense = (props) => {
   const titleRef = useRef();
   const dateRef = useRef();
@@ -12,8 +13,7 @@ const AddFamilyExpense = (props) => {
   const [isExpenseSaved, setIsExpenseSave] = useState(false);
   const router = useRouter();
   const refreshData = () => router.replace(router.asPath);
- 
-  
+
   const submitFormHandler = async (e) => {
     setIsLoading(true);
     e.preventDefault();
@@ -31,19 +31,20 @@ const AddFamilyExpense = (props) => {
       return;
     }
     const obj = {
+      id: uuidv4(),
       emailOfUser: props.session.email,
       name: props.session.name,
       amount: parseFloat(enteredAmount),
       title: enteredTitle,
       date: enteredDate,
     };
-    
+
     const response = await fetch("/api/add-family-expenses", {
       method: "POST",
       body: JSON.stringify({
-        familyId:router.query.familyId,
-        expenseData:obj 
-    }),
+        familyId: router.query.familyId,
+        expenseData: obj,
+      }),
       headers: {
         "Content-Type": "application/json",
       },
@@ -85,7 +86,7 @@ const AddFamilyExpense = (props) => {
             ref={amountRef}
             placeholder='"$10"'
             type="number"
-            step="any" 
+            step="any"
             min={1}
             className=" form-control mb-3"
           />
