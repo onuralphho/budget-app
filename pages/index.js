@@ -2,7 +2,8 @@ import Head from "next/head";
 import { Fragment } from "react";
 import BudgetSvg from "../svg/Statistics.svg";
 import { useSession, getSession } from "next-auth/react";
-
+import DeptSvg from "../svg/Dept.svg";
+import WaveSvg from "../svg/wave.svg";
 
 export default function Home() {
   const { data: session } = useSession();
@@ -32,22 +33,21 @@ export default function Home() {
         </div>
       </main>
       <section className="">
-        
+        <WaveSvg />
         <section className="bg-primary  min-vh-100">
           <div className="container text-white">
             <div className="row">
               <div className="col-md-6 pt-md-5">
                 <h1>Are you enough with depts?</h1>
                 <p>
-                   Lorem, ipsum dolor sit amet
-                  consectetur adipisicing elit. Voluptatibus quibusdam eum
-                  inventore quisquam odit dolore iusto distinctio, repudiandae
-                  fugit totam quos perferendis ratione est nam tenetur placeat
-                  provident, velit voluptates?
+                  Lorem, ipsum dolor sit amet consectetur adipisicing elit.
+                  Voluptatibus quibusdam eum inventore quisquam odit dolore
+                  iusto distinctio, repudiandae fugit totam quos perferendis
+                  ratione est nam tenetur placeat provident, velit voluptates?
                 </p>
               </div>
               <div className="col-md-6">
-                
+                <DeptSvg />
               </div>
             </div>
           </div>
