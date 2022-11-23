@@ -18,9 +18,7 @@ const FamilyExpenses = (props) => {
       }),
       headers: { "Content-Type": "application/json" },
     });
-
     setIsDeleting(false);
-
     refreshData();
   };
 

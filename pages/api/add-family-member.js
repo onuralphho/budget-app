@@ -4,20 +4,35 @@ import connectMongo from "../../database/conn";
 const handler2 = async (req, res) => {
   connectMongo().catch((error) => res.json({ error: "Connection Failed...!" }));
 
-  if (req.method === "POST") {
-  
-    
-    
+  if (req.method === "DELETE") {
+    families.updateOne(
+      { _id: req.body.familyId },
+      { $pull: { members: req.body.email } },
+      function (err, data) {
+        if (err)
+          return res.status(404).json({ message: "Something went wrong!" });
+        res
+          .status(201)
+          .json({ status: true, message: "Member deleted successfuly!" });
+      }
+    );
+    return
+  }
+ 
 
+  if (req.method === "POST") {
     families.findOneAndUpdate(
       { _id: req.body.familyId },
       { $push: { members: req.body.email } },
       function (err, data) {
         if (err)
           return res.status(404).json({ message: "Something went wrong!" });
-        res.status(201).json({status:true ,message: "Member added successfuly!" });
+        res
+          .status(201)
+          .json({ status: true, message: "Member added successfuly!" });
       }
     );
+    return
   } else {
     res
       .status(500)

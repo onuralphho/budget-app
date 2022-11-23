@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import { getSession, useSession } from "next-auth/react";
 import FamilyExpenses from "../../components/FamilyExpenses";
 import AddFamilyExpense from "../../components/AddFamilyExpense";
+import FamilyMembers from "../../components/FamilyMembers";
 import _ from "lodash";
 import { TbArrowsSort } from "react-icons/tb";
 
@@ -44,11 +45,11 @@ const ProductDetail = ({ familyDetails }) => {
     refreshData();
   };
 
-   let totalPrice = 0
+  let totalPrice = 0;
 
-   familyDetails.family.expenses.map((expense)=>(
-    totalPrice += expense.amount
-   ))
+  familyDetails.family.expenses.map(
+    (expense) => (totalPrice += expense.amount)
+  );
 
   return (
     <div className="container-me shadow-lg   rounded-4  ps-3 p-md-5 mb-5 mb-md-0">
@@ -106,7 +107,7 @@ const ProductDetail = ({ familyDetails }) => {
             <div className="row gap-3 justify-content-md-start p-0 pb-5 flex-row-reverse ">
               <div
                 className="CardEffect col bg-dark border p-0 pt-3 pb-3 p-md-3 rounded-4 shadow "
-                style={{ maxHeight: "20rem", overflowX:'hidden', }}
+                style={{ maxHeight: "20rem", overflowX: "hidden" }}
               >
                 <h4 className="text-center text-white border-bottom pb-2">
                   Family Expenses
@@ -192,13 +193,15 @@ const ProductDetail = ({ familyDetails }) => {
                             ))
                       : null}
                   </tbody>
-                  
                 </table>
-                <div className="row ps-3 position-sticky  bottom-0 bg-dark bg-black rounded-4" >
-                  <span className="text-white fs-3">Total Amount: <span className="text-primary">${totalPrice}</span></span>
+                <div className="row ps-3 position-sticky  bottom-0 bg-dark bg-black rounded-4">
+                  <span className="text-white fs-3">
+                    Total Amount:{" "}
+                    <span className="text-primary">${totalPrice}</span>
+                  </span>
                 </div>
               </div>
-              
+
               <div
                 className="col-md-4 border p-3 rounded-4 shadow text-center overflow-auto"
                 style={{ maxHeight: "20rem" }}
@@ -235,20 +238,30 @@ const ProductDetail = ({ familyDetails }) => {
                             Save
                           </button>
                         </form>
-                       {fetchMessage&& <p className={`${fetchMessage.status ? 'text-success':'text-danger'}`}>{fetchMessage.message}</p>}
+                        {fetchMessage && (
+                          <p
+                            className={`${
+                              fetchMessage.status
+                                ? "text-success"
+                                : "text-danger"
+                            }`}
+                          >
+                            {fetchMessage.message}
+                          </p>
+                        )}
                       </div>
                     )}
                   </div>
                 )}
                 <ul className="list-group ">
                   {familyDetails.family.members.map((member) => (
-                    <li
+                    <FamilyMembers
                       key={Math.random() * Date.now()}
-                      className=" fs-5 border-bottom p-2"
-                      style={{ listStyleType: "none" }}
-                    >
-                      {member}
-                    </li>
+                      familyId={familyDetails.family._id}
+                      member={member}
+                      sessionOwner={sessionOwner.email}
+                      familyOwner={familyDetails.family.owner}
+                    />
                   ))}
                 </ul>
               </div>
