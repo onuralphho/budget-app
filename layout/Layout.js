@@ -8,7 +8,7 @@ const Layout = (props) => {
       <div className=" min-vh-100 ">{props.children}</div>
       <footer class=" flex-shrink-0 py-3 bg-dark text-white-50 d-none d-md-block">
         <div class="container text-center">
-          <small>Copyright &copy; Budget-App</small>
+          <small>Copyright &copy; Budget-App 2022</small>
         </div>
       </footer>
     </Fragment>
