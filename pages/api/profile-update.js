@@ -4,16 +4,22 @@ import users from "../../model/Schema";
 const handler3 = async (req, res) => {
   connectMongo().catch((error) => res.json({ error: "Connection failed!" }));
 
-  if (req.method === "PUT") {
+  if (req.method === "POST") {
     if (!req.body) {
       res.status(404).json({ error: "Empty Form Data !" });
     }
 
-    await users.updateOne(
+    users.updateOne(
       { email: req.body.email },
-      { $set: { image: req.body.image } }
-    );  
-    
+      { $set: { image: req.body.image } },
+      function (err, data) {
+        if (err)
+          return res.status(404).json({ message: "Something went wrong!" });
+        res
+          .status(201)
+          .json({ message: "Picture added successfuly!" });
+      }
+    );
   } else {
     res
       .status(500)

@@ -8,6 +8,7 @@ const MainNavigation = () => {
   const [profileShow, setProfileShow] = useState(false);
   const router = useRouter();
   const { data: session } = useSession();
+ 
   return (
     <>
       <nav className=" container-fluid bg-dark text-white mb-3 d-none d-sm-block">

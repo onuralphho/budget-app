@@ -6,7 +6,7 @@ import { sleep } from "../utils/sleep";
 import Expense from "./Expense";
 import { useRouter } from "next/router";
 import Link from "next/link";
-import _ from 'lodash';
+import _ from "lodash";
 import { HiSortAscending } from "react-icons/hi";
 import { HiSortDescending } from "react-icons/hi";
 
@@ -17,18 +17,17 @@ const Profile = (props) => {
   const titleRef = useRef();
   const dateRef = useRef();
   const amountRef = useRef();
-  const imageRef = useRef();
+
   const [isFormValid, setIsFormValid] = useState(true);
   const [showPpChanger, setShowPpChanger] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isExpenseSaved, setIsExpenseSave] = useState(false);
-  const [ascendingOrder,setAscendingOrder] = useState(true)
-
+  const [ascendingOrder, setAscendingOrder] = useState(true);
+  const [imgLoading, setImgLoading] = useState(false);
   const router = useRouter();
   const refreshData = () => router.replace(router.asPath);
+  const [image, setImage] = useState();
 
-
-  
   const submitFormHandler = async (e) => {
     setIsLoading(true);
     e.preventDefault();
@@ -54,7 +53,7 @@ const Profile = (props) => {
       title: enteredTitle,
       date: enteredDate,
     };
-    
+
     const response = await fetch("/api/add-expense", {
       method: "POST",
       body: JSON.stringify(obj),
@@ -72,22 +71,50 @@ const Profile = (props) => {
     refreshData();
   };
 
-  const changeProfilePicHandler = async (e) => {
-    const obj = { image: imageRef.current.value, email: session.user.email };
+  const uploadImage = async (e) => {
+    e.preventDefault();
+    let img_url;
+    setImgLoading(true);
+    const data = new FormData();
+    data.append("file", image);
+    data.append("upload_preset", "budget-images");
+    data.append("cloud_name", "djmonktf8");
+    await fetch("https://api.cloudinary.com/v1_1/djmonktf8/image/upload", {
+      method: "POST",
+      body: data,
+    })
+      .then((resp) => resp.json())
+      .then((data) => {
+        img_url = data.url;
+        
+        session.user.image = img_url;
+      })
+      .catch((err) => console.log(err));
 
-    await fetch("/api/profile-update", {
-      method: "PUT",
+    const obj = {
+      image: img_url,
+      email: session.user.email,
+    };
+
+    const res2 = await fetch("/api/profile-update", {
+      method: "POST",
       body: JSON.stringify(obj),
       headers: { "Content-Type": "application/json" },
     });
+
+    const data_pp = res2.json();
+    
+    setImgLoading(false);
+
+    refreshData();
   };
 
   return (
-    <div className="container shadow rounded-5 p-4" >
-      <div className="row justify-content-center " >
+    <div className="container shadow rounded-5 p-4">
+      <div className="row justify-content-center ">
         <div
           style={{ minWidth: "20rem" }}
-          className=" col-sm-3 rounded-3 col-md-3 text-center"
+          className=" col-sm-3 rounded-3 s col-md-3 text-center"
         >
           <img
             style={{ minWidth: "15rem" }}
@@ -106,18 +133,20 @@ const Profile = (props) => {
 
           {showPpChanger && (
             <>
-              <form
-                className=" d-flex gap-2"
-                onSubmit={changeProfilePicHandler}
-              >
+              <form className=" d-flex gap-2" onSubmit={uploadImage}>
                 <input
-                  ref={imageRef}
+                  onChange={(e) => setImage(e.target.files[0])}
                   className="form-control "
                   type="file"
                   id="formFile"
+                  accept="image/*"
                 />
                 <button type="submit" className="btn btn-success ">
-                  Submit
+                  {imgLoading ? (
+                    <span className="spinner-border spinner-border-sm"></span>
+                  ) : (
+                    <span>Submit</span>
+                  )}
                 </button>
               </form>
             </>
@@ -164,20 +193,37 @@ const Profile = (props) => {
         </div>
       </div>
       {isExpenses && (
-        <div className="row gap-5 p-4  mt-3 justify-content-center mb-5 mb-md-0 " >
+        <div className="row gap-5 p-4  mt-3 justify-content-center mb-5 mb-md-0 ">
           <div className="row">
-          {props.expensesData.expenses.length === 0 ? <h2 className="text-center">No expense founded! Add one!</h2> :<span className="text-end "><button onClick={() => {
-            setAscendingOrder(!ascendingOrder)
-          }} className="btn">{ascendingOrder ? <HiSortAscending size={40}/> : <HiSortDescending size={40}/>}</button></span>}
+            {props.expensesData.expenses.length === 0 ? (
+              <h2 className="text-center">No expense founded! Add one!</h2>
+            ) : (
+              <span className="text-end ">
+                <button
+                  onClick={() => {
+                    setAscendingOrder(!ascendingOrder);
+                  }}
+                  className="btn"
+                >
+                  {ascendingOrder ? (
+                    <HiSortAscending size={40} />
+                  ) : (
+                    <HiSortDescending size={40} />
+                  )}
+                </button>
+              </span>
+            )}
           </div>
-          {ascendingOrder ? _.sortBy(props.expensesData.expenses,'date').slice(0).reverse().map((expense) => (
-            
-            <Expense key={expense._id} expenseData={expense} />
-          )) : _.sortBy(props.expensesData.expenses,'date').map((expense) => (
-            
-            <Expense key={expense._id} expenseData={expense} />
-          )) }
-          
+          {ascendingOrder
+            ? _.sortBy(props.expensesData.expenses, "date")
+                .slice(0)
+                .reverse()
+                .map((expense) => (
+                  <Expense key={expense._id} expenseData={expense} />
+                ))
+            : _.sortBy(props.expensesData.expenses, "date").map((expense) => (
+                <Expense key={expense._id} expenseData={expense} />
+              ))}
         </div>
       )}
       {isNewExpense && (
