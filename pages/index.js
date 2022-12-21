@@ -17,7 +17,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <div
+      {/* <div
         id="slider-wrapper"
         className="container-fluid mx-auto "
         style={{
@@ -36,7 +36,7 @@ export default function Home() {
             <Slider></Slider>
           </div>
         </div>
-      </div>
+      </div> */}
 
       <main className="container base-color mt-5 text-dark  ">
         <div className="row">
