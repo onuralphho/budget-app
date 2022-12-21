@@ -33,8 +33,8 @@ const MainNavigation = () => {
                     <h5
                       className={
                         router.pathname == "/"
-                          ? "text-decoration-none text-secondary"
-                          : "text-decoration-none text-white"
+                          ? "text-decoration-none text-primary pb-1 border-bottom border-primary border-2"
+                          : "text-decoration-none text-white pb-1"
                       }
                     >
                       Home
@@ -59,7 +59,6 @@ const MainNavigation = () => {
                             maxWidth: "2.5rem",
                             borderRadius: "2rem",
                             cursor: "pointer",
-                            
                           }}
                         />
                       </div>
@@ -137,7 +136,14 @@ const MainNavigation = () => {
           }}
         >
           <div className="col fs-4 text-white ">
-            <Link className="text-white text-decoration-none" href="/">
+            <Link
+              className={
+                router.pathname == "/"
+                  ? "text-decoration-none text-primary pb-1 border-bottom border-primary border-2"
+                  : "text-decoration-none text-white"
+              }
+              href="/"
+            >
               Home
             </Link>
           </div>
@@ -180,7 +186,11 @@ const MainNavigation = () => {
                 </span>
               </Link>
             ) : (
-              <Link className="text-white text-decoration-none" href="/login">
+              <Link className={
+                router.pathname == "/login" || router.pathname == "/register"
+                  ? "text-decoration-none text-primary pb-1 border-bottom border-primary border-2"
+                  : "text-decoration-none text-white"
+              } href="/login">
                 <span className="">Sign In</span>
               </Link>
             )}
