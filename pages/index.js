@@ -1,9 +1,11 @@
 import Head from "next/head";
 import { Fragment } from "react";
 import BudgetSvg from "../svg/Statistics.svg";
-import { useSession, getSession } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import DeptSvg from "../svg/Dept.svg";
 import WaveSvg from "../svg/wave.svg";
+import Slider from "../components/Slider";
+import url from "cloudinary-build-url/dist/cjs/url";
 
 export default function Home() {
   const { data: session } = useSession();
@@ -14,6 +16,28 @@ export default function Home() {
         <meta name="description" content="Budget App for your family" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
+
+      <div
+        id="slider-wrapper"
+        className="container-fluid mx-auto "
+        style={{
+          
+          maxWidth: "1920px",
+          
+          boxShadow: " inset 0px 15px 50px rgba(0,0,0,0.5)",
+          // background:
+          //   'url("https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg")',
+          // backgroundRepeat: "no-repeat",
+          // backgroundSize: "cover",
+        }}
+      >
+        <div className="container ">
+          <div className="row">
+            <Slider></Slider>
+          </div>
+        </div>
+      </div>
+
       <main className="container base-color mt-5 text-dark  ">
         <div className="row">
           <div className="row text-center d-block d-sm-none">
@@ -32,6 +56,7 @@ export default function Home() {
           </div>
         </div>
       </main>
+
       <section className="">
         <WaveSvg />
         <section className="bg-primary p-3 min-vh-100">

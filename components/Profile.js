@@ -7,6 +7,7 @@ import Expense from "./Expense";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import _ from "lodash";
+import Image from "next/image";
 import { HiSortAscending } from "react-icons/hi";
 import { HiSortDescending } from "react-icons/hi";
 
@@ -86,7 +87,7 @@ const Profile = (props) => {
       .then((resp) => resp.json())
       .then((data) => {
         img_url = data.url;
-        
+
         session.user.image = img_url;
       })
       .catch((err) => console.log(err));
@@ -103,7 +104,7 @@ const Profile = (props) => {
     });
 
     const data_pp = res2.json();
-    
+
     setImgLoading(false);
 
     refreshData();
@@ -116,10 +117,14 @@ const Profile = (props) => {
           style={{ minWidth: "20rem" }}
           className=" col-sm-3 rounded-3 s col-md-3 text-center"
         >
-          <img
+          <Image
+            width={300}
+            height={300}
+            placeholder="blur"
+            blurDataURL="data:image/jpeg;base64,/9j/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAb/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWEREiMxUf/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R//2Q=="
             style={{ minWidth: "15rem" }}
             src={props.userData.user.image}
-            className="img-fluid rounded-3 "
+            className="img-fluid rounded-3 shadow"
             alt="profile-picture"
           />
           <button
@@ -159,11 +164,10 @@ const Profile = (props) => {
               <p className="text-secondary"> ({props.userData.user.email}) </p>
             </div>
             <Link href="/family">
-              <button className="btn btn-dark position-relative">
-                <h2>Family</h2>
+              <button className="btn btn-dark position-relative py-2">
+                <h2 className="my-auto">Family</h2>
                 <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
                   New
-                  <span className="visually-hidden">new functions</span>
                 </span>
               </button>
             </Link>

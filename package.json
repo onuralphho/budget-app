@@ -6,30 +6,36 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "static": "next build && next export"
   },
   "dependencies": {
+    "@capacitor/android": "^4.6.1",
+    "@capacitor/core": "^4.6.1",
+    "@capacitor/ios": "^4.6.1",
     "@next-auth/mongodb-adapter": "^1.1.1",
     "@popperjs/core": "^2.11.6",
     "bcryptjs": "^2.4.3",
-    "bootstrap": "^5.2.2",
+    "bootstrap": "^5.2.3",
     "cloudinary-build-url": "^0.2.4",
-    "eslint": "8.27.0",
-    "eslint-config-next": "13.0.2",
+    "eslint": "8.29.0",
+    "eslint-config-next": "13.0.6",
     "jquery": "^3.6.1",
     "lodash": "^4.17.21",
-    "mongodb": "^4.11.0",
-    "next": "13.0.2",
-    "next-auth": "^4.16.4",
-    "next-cloudinary": "^1.1.0",
+    "mongodb": "^4.12.1",
+    "next": "13.0.6",
+    "next-auth": "^4.18.0",
+    "next-cloudinary": "^1.2.0",
     "openssl": "^2.0.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "react-icons": "^4.6.0"
+    "react-icons": "^4.7.1",
+    "swiper": "^8.4.5"
   },
   "devDependencies": {
+    "@capacitor/cli": "^4.6.1",
     "@svgr/webpack": "^6.5.1",
     "file-loader": "^6.2.0",
-    "mongoose": "^6.7.2"
+    "mongoose": "^6.8.0"
   }
 }

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { useRouter } from "next/router";
 import { useSession, signOut } from "next-auth/react";
 import { useState } from "react";
@@ -8,10 +9,10 @@ const MainNavigation = () => {
   const [profileShow, setProfileShow] = useState(false);
   const router = useRouter();
   const { data: session } = useSession();
- 
+
   return (
     <>
-      <nav className=" container-fluid bg-dark text-white mb-3 d-none d-sm-block">
+      <nav className=" container-fluid bg-dark text-white  d-none d-sm-block">
         <div className="container">
           <div className="row justify-content-between">
             <div className="col-md-5">
@@ -42,28 +43,31 @@ const MainNavigation = () => {
                 </div>
 
                 {session && (
-                  <div className="col-6 col-md-2">
+                  <div className="col-6 col-md-2 align-self-center">
                     <div className="row">
-                      <div className="col mb-2 mb-md-0">
-                        <img
+                      <div className="col mb-2 mb-md-0 ">
+                        <Image
                           onClick={() => {
                             setProfileShow(!profileShow);
                           }}
                           className="img-fluid"
                           src={session.user.image}
                           alt="profile picture"
+                          width={300}
+                          height={300}
                           style={{
                             maxWidth: "2.5rem",
                             borderRadius: "2rem",
                             cursor: "pointer",
+                            
                           }}
                         />
                       </div>
                     </div>
 
                     {session && profileShow && (
-                      <div className="row">
-                        <div className="col">
+                      <div className="row ">
+                        <div className="col " style={{ zIndex: "9999" }}>
                           <ul
                             onMouseOver={() => {
                               setProfileShow(true);
@@ -71,7 +75,7 @@ const MainNavigation = () => {
                             onMouseOut={() => {
                               setProfileShow(false);
                             }}
-                            className="bg-dark list-group position-fixed"
+                            className="bg-dark list-group position-absolute"
                           >
                             <li className="list-group-item ">
                               <Link
@@ -122,11 +126,15 @@ const MainNavigation = () => {
       </nav>
       <div
         className="container d-sm-none position-fixed bottom-0 "
-        style={{ zIndex: "999"}}
+        style={{ zIndex: "999" }}
       >
         <div
           className=" row vw-100 bg-dark text-center  align-items-center "
-          style={{ minHeight: "3.5rem", borderTopLeftRadius:'1.8rem', borderTopRightRadius:'1.8rem' }}
+          style={{
+            minHeight: "3.5rem",
+            borderTopLeftRadius: "1.8rem",
+            borderTopRightRadius: "1.8rem",
+          }}
         >
           <div className="col fs-4 text-white ">
             <Link className="text-white text-decoration-none" href="/">
@@ -134,17 +142,22 @@ const MainNavigation = () => {
             </Link>
           </div>
           <div className="col-2 fs-4 text-white ">
-            <Link className="text-white text-decoration-none " href="/login">
+            <Link
+              className="text-white text-decoration-none position-relative"
+              href="/login"
+            >
               {!session ? (
                 <FcDoughnutChart size={40} className="CardEffect" />
               ) : (
-                <img
+                <Image
                   onClick={() => {
                     setProfileShow(!profileShow);
                   }}
                   className="img-fluid"
                   src={session.user.image}
                   alt="profile picture"
+                  width={300}
+                  height={300}
                   style={{
                     maxWidth: "2.5rem",
                     borderRadius: "2rem",

@@ -1,5 +1,6 @@
 import { useRouter } from "next/router";
 import { useState } from "react";
+import Image from "next/image";
 
 const Expense = (props) => {
   const router = useRouter();
@@ -23,7 +24,7 @@ const Expense = (props) => {
 
     const data = await res.json();
     setNotification(data);
-    
+
     refreshData();
   };
 
@@ -43,11 +44,15 @@ const Expense = (props) => {
           ></button>
         </div>
         <div className="row">
-          <div className="col-6">
-            <img
-              className=" img-fluid"
+          <div className="col-6  my-auto">
+            <Image
+              height={300}
+              width={300}
+              placeholder="blur"
+              blurDataURL="https://img.freepik.com/free-vector/flat-design-installment-illustration_23-2149389193.jpg?w=826&t=st=1668345154~exp=1668345754~hmac=d0ecb52b91979d1cf930e9c9eb6b224201fcb1b9e7664b6d6baf6b4ba700b3c3"
               src="https://img.freepik.com/free-vector/flat-design-installment-illustration_23-2149389193.jpg?w=826&t=st=1668345154~exp=1668345754~hmac=d0ecb52b91979d1cf930e9c9eb6b224201fcb1b9e7664b6d6baf6b4ba700b3c3"
               alt="expense pic"
+              className="img-fluid"
             />
           </div>
           <div className="col-6 mt-2">
@@ -58,7 +63,19 @@ const Expense = (props) => {
               </h5>
             </div>
             <div className="row">
-              <h5 className={`${props.expenseData.amount >100 ? 'text-danger' : props.expenseData.amount > 50 ? 'text-warning' : props.expenseData.amount > 0 ?'text-success' : ''}`}>${props.expenseData.amount}</h5>
+              <h5
+                className={`${
+                  props.expenseData.amount > 100
+                    ? "text-danger"
+                    : props.expenseData.amount > 50
+                    ? "text-warning"
+                    : props.expenseData.amount > 0
+                    ? "text-success"
+                    : ""
+                }`}
+              >
+                ${props.expenseData.amount}
+              </h5>
             </div>
             <div className="row">
               <div className="col fst-italic">{props.expenseData.name} </div>
