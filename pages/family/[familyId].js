@@ -50,12 +50,12 @@ const ProductDetail = ({ familyDetails }) => {
   familyDetails.family.expenses.map(
     (expense) => (totalPrice += expense.amount)
   );
-
+console.log(isMenuOpen)
   return (
     <div className="container-me shadow-lg   rounded-4  ps-3 p-md-5 mb-5 mb-md-0">
       <div className="row justify-content-center ">
         <div className="row">
-          <div className="col mt-3 d-md-none">
+          <div className="col-3 mt-3 d-md-none">
             <button
               onClick={() => {
                 setIsMenuOpen(!isMenuOpen);
@@ -64,33 +64,37 @@ const ProductDetail = ({ familyDetails }) => {
             >
               Menu
             </button>
-          </div>
-        </div>
-        <div
-          className={`row m-2 p-2 justify-content-around rounded-4 gap-2 w-75 text-center bg-dark text-white ${
-            isMenuOpen ? "d-flex" : "d-none d-md-flex"
-          }`}
-        >
-          <div
-            onClick={() => {
-              setIsAddExpense(false);
-            }}
-            className="col-md-3 fs-5 fw-bold  "
-            style={{ cursor: "pointer" }}
-          >
-            <span>Home Page</span>
-          </div>
+            </div>
+            <div
+              className={`slide-in  col align-items-center p-md-2  mt-3  justify-content-around rounded-5 gap-2 w-75 text-center bg-dark text-white ${
+                isMenuOpen ? "d-flex" : "d-none d-md-flex"
+              }`}
+            >
+              <div
+                onClick={() => {
+                  setIsAddExpense(false);
+                }}
+                className="col-md-3  fw-bold  "
+                style={{ cursor: "pointer" }}
+              >
+                <span>Home Page</span>
+              </div>
 
-          <div
-            onClick={() => {
-              setIsAddExpense(true);
-            }}
-            className="col-md-3  fs-5 fw-bold"
-            style={{ cursor: "pointer" }}
-          >
-            <span>Add Expense</span>
-          </div>
+              <div
+                onClick={() => {
+                  setIsAddExpense(true);
+                }}
+                className="col-md-3   fw-bold"
+                style={{ cursor: "pointer" }}
+              >
+                <span>Add Expense</span>
+              </div>
+
+
+            </div>
+          
         </div>
+
         <div className="row ps-4 pt-3">
           <Link
             href="/family"
@@ -115,9 +119,9 @@ const ProductDetail = ({ familyDetails }) => {
                 <table className="table table-dark  table-bordered  table-striped table-sm  ">
                   <thead>
                     <tr>
-                      <th className=" align-baseline">Name</th>
-                      <th className=" align-baseline">Title</th>
-                      <th className=" align-baseline ">
+                      <th className="align-baseline">Name</th>
+                      <th className="align-baseline">Title</th>
+                      <th className="align-baseline ">
                         <span
                           onClick={() => {
                             setCheckSort(true);

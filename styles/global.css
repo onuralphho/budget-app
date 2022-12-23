@@ -103,3 +103,38 @@
         background-color: rgb(111, 163, 240);
     }
 }
+
+
+
+.slide-in{
+    
+    animation: menu-slide-in 0.5s ease-out ;
+}
+.slide-out{
+    
+    animation: menu-slide-out 0.5s ease-out ;
+}
+
+
+
+@keyframes menu-slide-in {
+    0%{
+        opacity: 0;
+        transform: translateY(-200px);
+    }
+    100%{
+        opacity: 1;
+        transform: translateY(0px);
+    }
+}
+
+@keyframes menu-slide-out {
+    from{
+        opacity: 1;
+        transform: translateY(0px);
+    }
+    to{
+        opacity: 0;
+        transform: translateY(-200px);
+    }
+}

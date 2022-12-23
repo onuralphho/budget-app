@@ -6,10 +6,9 @@ import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
 
 function MyApp({ Component, pageProps: { session, ...pageProps } }) {
+  const router = useRouter();
+  const [loading, setLoading] = useState(false);
   const Loading = () => {
-    const router = useRouter();
-    const [loading, setLoading] = useState(false);
-
     useEffect(() => {
       const handleStart = (url) => url !== router.asPath && setLoading(true);
       const handleComplete = (url) =>
@@ -29,8 +28,8 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }) {
     return (
       loading && (
         <div
-          className="d-flex justify-content-center align-items-center bg-white "
-          style={{ height: "100vh", width: "100vw" }}
+          className="position-absolute  d-flex justify-content-center align-items-center bg-white "
+          style={{ height: "100%", width: "100%" }}
         >
           <div class="spinner-square">
             <div class="square-1 square"></div>
@@ -44,9 +43,10 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }) {
 
   return (
     <SessionProvider session={session}>
-      <Loading></Loading>
+      
       <Layout>
-        <Component {...pageProps} />
+      <Loading></Loading>
+        {!loading&&<Component {...pageProps} />}
       </Layout>
     </SessionProvider>
   );
