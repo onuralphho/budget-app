@@ -12,17 +12,22 @@ const MainNavigation = () => {
 
   return (
     <>
-      <nav className=" container-fluid bg-dark text-white  d-none d-sm-block" style={{zIndex:"99"}}>
+      <nav
+        className=" container-fluid bg-white text-white  d-none d-sm-block"
+        style={{ zIndex: "99" }}
+      >
         <div className="container">
           <div className="row justify-content-between">
             <div className="col-md-5">
               <h1>
                 <Link
                   style={{ textDecoration: "none" }}
-                  className="text-white"
+                  className="text-dark"
                   href="/"
                 >
-                  Budget App
+                  <span className="fs-3 fw">
+                    <span className="fs-1 text-primary me-1">Budget</span>App
+                  </span>
                 </Link>
               </h1>
             </div>
@@ -34,7 +39,7 @@ const MainNavigation = () => {
                       className={
                         router.pathname == "/"
                           ? "text-decoration-none text-primary pb-1 border-bottom border-primary border-2"
-                          : "text-decoration-none text-white pb-1"
+                          : "text-decoration-none text-primary pb-1"
                       }
                     >
                       Home
@@ -74,12 +79,13 @@ const MainNavigation = () => {
                             onMouseOut={() => {
                               setProfileShow(false);
                             }}
-                            className="bg-dark list-group position-absolute"
+                            className="slide-in list-group position-absolute rounded-4 bg-dark border border-2 border-primary "
                           >
-                            <li className="list-group-item ">
+                            <li className="list-group-item bg-dark ">
                               <Link
                                 href="/profile"
-                                className="link-dark text-decoration-none"
+                                style={{ cursor: "pointer" }}
+                                className=" text-white text-decoration-none"
                                 onClick={() => {
                                   setProfileShow(false);
                                 }}
@@ -88,11 +94,11 @@ const MainNavigation = () => {
                               </Link>
                             </li>
                             <li
+                              className="list-group-item bg-dark text-danger  "
                               style={{ cursor: "pointer" }}
                               onClick={() => {
                                 signOut({ callbackUrl: "/" });
                               }}
-                              className="list-group-item text-danger"
                             >
                               Logout
                             </li>
@@ -186,11 +192,15 @@ const MainNavigation = () => {
                 </span>
               </Link>
             ) : (
-              <Link className={
-                router.pathname === "/login" || router.pathname === "/register"
-                  ? "text-decoration-none text-primary pb-1 border-bottom border-primary border-2"
-                  : "text-decoration-none text-white"
-              } href="/login">
+              <Link
+                className={
+                  router.pathname === "/login" ||
+                  router.pathname === "/register"
+                    ? "text-decoration-none text-primary pb-1 border-bottom border-primary border-2"
+                    : "text-decoration-none text-white"
+                }
+                href="/login"
+              >
                 <span className="">Sign In</span>
               </Link>
             )}

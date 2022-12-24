@@ -36,7 +36,7 @@ const Expense = (props) => {
         </div>
       )}
 
-      <div className="CardEffect col-md-4 col-xl-3 border rounded-5 shadow p-3">
+      <div className="CardEffect my-3 my-md-0 mx-md-3 col-md-4 col-xl-3 border rounded-5 shadow p-3">
         <div className="row justify-content-end pe-3">
           <button
             onClick={deleteHandler}

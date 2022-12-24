@@ -184,26 +184,26 @@ const Profile = (props) => {
           className="p-2 text-center "
           style={{ cursor: "pointer" }}
         >
-          <h3>Expenses</h3>
+          <span className="fs-4">Expenses</span>
         </div>
         <div
           onClick={() => {
             setIsNewExpense(true);
             setIsExpenses(false);
           }}
-          className="p-2 text-center "
+          className="p-2 text-center  "
           style={{ cursor: "pointer" }}
         >
-          <h3>New Expense </h3>
+          <span className="fs-4 text-nowrap ">New Expense </span>
         </div>
       </div>
       {isExpenses && (
-        <div className="row gap-5 p-4  mt-3 justify-content-center mb-5 mb-md-0 ">
-          <div className="row">
+        <div className="row p-3 mt-3 justify-content-center mb-5 mb-md-0 ">
+          <div className="row ">
             {props.expensesData.expenses.length === 0 ? (
               <h2 className="text-center">No expense founded! Add one!</h2>
             ) : (
-              <span className="text-end ">
+              <span className="text-end">
                 <button
                   onClick={() => {
                     setAscendingOrder(!ascendingOrder);

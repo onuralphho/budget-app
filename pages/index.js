@@ -5,7 +5,6 @@ import { useSession } from "next-auth/react";
 import DeptSvg from "../svg/Dept.svg";
 import WaveSvg from "../svg/wave.svg";
 
-
 export default function Home() {
   const { data: session } = useSession();
   return (
@@ -37,10 +36,12 @@ export default function Home() {
         </div>
       </div> */}
 
-      <main className="container base-color mt-5 text-dark  ">
+      <main className="container base-color mt-sm-5 text-dark  ">
         <div className="row">
-          <div className="row text-center d-block d-sm-none">
-            <h1>Budget App</h1>
+          <div className="row text-start d-block d-sm-none">
+            <span className="fs-3 fw-semibold">
+              <span className="fs-1 text-primary me-1">Budget</span>App
+            </span>
           </div>
           <div className="col-md-6">
             <BudgetSvg />
