@@ -62,6 +62,7 @@
     flex-direction: row;
     width: 90px;
     height: 120px;
+    
 }
 
 .spinner-square > .square {
@@ -86,7 +87,7 @@
 @keyframes square-anim {
     0% {
         height: 80px;
-        background-color: rgb(111, 163, 240);
+        background-color: rgb(54, 125, 233);
     }
     20% {
         height: 80px;
@@ -100,7 +101,7 @@
     }
     100% {
         height: 80px;
-        background-color: rgb(111, 163, 240);
+        background-color: rgb(54, 125, 233);
     }
 }
 

@@ -1,13 +1,26 @@
 import Profile from "../../components/Profile";
 import { getSession } from "next-auth/react";
+import Head from "next/head";
+
 
 const ProfilePage = ({ userData, expensesData }) => {
-  return <Profile userData={userData} expensesData={expensesData}></Profile>;
+  return (
+    <>
+      <Head>
+        <title>Profile</title>
+        <meta name="description" content="Keep track of your expenses!" />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+
+      <Profile userData={userData} expensesData={expensesData}></Profile>
+    </>
+  );
 };
 
 export default ProfilePage;
 
 export const getServerSideProps = async (context) => {
+  
   const session = await getSession({ req: context.req });
   if (!session) {
     return {

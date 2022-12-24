@@ -6,9 +6,9 @@ import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
 
 function MyApp({ Component, pageProps: { session, ...pageProps } }) {
-  const router = useRouter();
-  const [loading, setLoading] = useState(false);
   const Loading = () => {
+    const router = useRouter();
+    const [loading, setLoading] = useState(false);
     useEffect(() => {
       const handleStart = (url) => url !== router.asPath && setLoading(true);
       const handleComplete = (url) =>
@@ -27,26 +27,31 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }) {
 
     return (
       loading && (
-        <div
-          className="position-absolute  d-flex justify-content-center align-items-center bg-white "
-          style={{ height: "100%", width: "100%" }}
-        >
-          <div class="spinner-square">
-            <div class="square-1 square"></div>
-            <div class="square-2 square"></div>
-            <div class="square-3 square"></div>
+        <>
+          <div
+            className="position-fixed top-0 start-0  bg-dark opacity-75 "
+            style={{ height: "100%", width: "100%", zIndex: "90" }}
+          ></div>
+          <div className=" position-fixed d-flex justify-content-center align-items-center top-0 " style={{ height: "100%", width: "100%", zIndex: "98"}}>
+            <div
+              class="spinner-square position-fixed mx-auto my-auto"
+              style={{ zIndex: "98" }}
+            >
+              <div class="square-1 square" style={{ zIndex: "98" }}></div>
+              <div class="square-2 square " style={{ zIndex: "98" }}></div>
+              <div class="square-3 square" style={{ zIndex: "98" }}></div>
+            </div>
           </div>
-        </div>
+        </>
       )
     );
   };
 
   return (
     <SessionProvider session={session}>
-      
       <Layout>
-      <Loading></Loading>
-        {!loading&&<Component {...pageProps} />}
+        <Loading></Loading>
+        <Component {...pageProps} />
       </Layout>
     </SessionProvider>
   );

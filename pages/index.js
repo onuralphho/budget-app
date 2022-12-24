@@ -4,8 +4,7 @@ import BudgetSvg from "../svg/Statistics.svg";
 import { useSession } from "next-auth/react";
 import DeptSvg from "../svg/Dept.svg";
 import WaveSvg from "../svg/wave.svg";
-import Slider from "../components/Slider";
-import url from "cloudinary-build-url/dist/cjs/url";
+
 
 export default function Home() {
   const { data: session } = useSession();

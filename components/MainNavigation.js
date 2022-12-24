@@ -12,7 +12,7 @@ const MainNavigation = () => {
 
   return (
     <>
-      <nav className=" container-fluid bg-dark text-white  d-none d-sm-block">
+      <nav className=" container-fluid bg-dark text-white  d-none d-sm-block" style={{zIndex:"99"}}>
         <div className="container">
           <div className="row justify-content-between">
             <div className="col-md-5">
@@ -187,7 +187,7 @@ const MainNavigation = () => {
               </Link>
             ) : (
               <Link className={
-                router.pathname == "/login" || router.pathname == "/register"
+                router.pathname === "/login" || router.pathname === "/register"
                   ? "text-decoration-none text-primary pb-1 border-bottom border-primary border-2"
                   : "text-decoration-none text-white"
               } href="/login">
