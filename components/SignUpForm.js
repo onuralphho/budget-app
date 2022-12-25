@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/router";
 import { signIn } from "next-auth/react";
 import AuthSvg from "../svg/Authentication.svg";
@@ -6,6 +6,7 @@ import FingerPrintSvg from "../svg/fingerprint.svg";
 import Link from "next/link";
 import { FcGoogle } from "react-icons/fc";
 import { BsGithub } from "react-icons/bs";
+import { replace } from "lodash";
 
 const SignUpForm = (props) => {
   const nameRef = useRef();
@@ -16,12 +17,9 @@ const SignUpForm = (props) => {
   const [isFormValid, setIsFormValid] = useState(true);
 const [errorMessage, setErrorMessage] = useState(null)
 const [isLoading, setIsLoading] = useState(false);
-  let router = useRouter();
-  
-  /***********************************************************************/
-  /***********************************************************************/
-  /***********************************************************************/
  
+
+
   const submitFormHandler = async (e) => {
     e.preventDefault();
     setIsLoading(true)
@@ -80,11 +78,11 @@ const [isLoading, setIsLoading] = useState(false);
   /***********************************************************************/
   return (
     <div className="container mt-5 mb-5 d-flex justify-content-center">
-      <div className="row w-100   justify-content-center">
+      <div className="row w-100 d-flex flex-md-row flex-column gap-2   justify-content-center">
         <div className="col-md-5 ">
           <AuthSvg />
         </div>
-        <div className="col-md-4 ">
+        <div className="col-md-6 col-lg-4 ">
           <form onSubmit={submitFormHandler}>
             <div className="card px-1 py-4">
               <div className="card-body">

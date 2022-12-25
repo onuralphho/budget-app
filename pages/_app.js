@@ -34,12 +34,12 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }) {
           ></div>
           <div className=" position-fixed d-flex justify-content-center align-items-center top-0 " style={{ height: "100%", width: "100%", zIndex: "98"}}>
             <div
-              class="spinner-square position-fixed mx-auto my-auto"
+              className="spinner-square position-fixed mx-auto my-auto"
               style={{ zIndex: "98" }}
             >
-              <div class="square-1 square" style={{ zIndex: "98" }}></div>
-              <div class="square-2 square " style={{ zIndex: "98" }}></div>
-              <div class="square-3 square" style={{ zIndex: "98" }}></div>
+              <div className="square-1 square" style={{ zIndex: "98" }}></div>
+              <div className="square-2 square " style={{ zIndex: "98" }}></div>
+              <div className="square-3 square" style={{ zIndex: "98" }}></div>
             </div>
           </div>
         </>

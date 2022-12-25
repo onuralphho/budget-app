@@ -32,15 +32,15 @@ const AuthForm = (props) => {
 
   return (
     <div className="container mt-5 mb-5 d-flex justify-content-center pt-0 pt-md-5">
-      <div className="row w-100   justify-content-center">
+      <div className="row w-100 d-flex flex-md-row flex-column gap-2   justify-content-center">
         <div className="col-md-5 ">
           <AuthSvg />
         </div>
-        <div className="col-md-4 ">
+        <div className="col-md-6 col-lg-4 ">
           <form onSubmit={submitFormHandler}>
             <div className="card px-1 py-4">
               <div className="card-body">
-                <h2 className="card-title mb-4 text-center ">
+                <h2 className="card-title d-flex justify-content-center gap-2 mb-4 text-center ">
                   <span>
                     <Link
                       className=" text-decoration-none btn btn-primary fw-semibold"

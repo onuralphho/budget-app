@@ -6,7 +6,7 @@ import DeptSvg from "../svg/Dept.svg";
 import WaveSvg from "../svg/wave.svg";
 
 export default function Home() {
-  const { data: session } = useSession();
+ 
   return (
     <Fragment>
       <Head>

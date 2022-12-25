@@ -46,6 +46,19 @@ const MainNavigation = () => {
                     </h5>
                   </Link>
                 </div>
+                {!session&&<div className="col-6 col-md-2 - pt-2 ">
+                  <Link className="text-decoration-none" href="/login">
+                    <h5
+                      className={
+                        router.pathname == "/login"
+                          ? "text-decoration-none text-primary pb-1 border-bottom border-primary border-2"
+                          : "text-decoration-none text-primary pb-1"
+                      }
+                    >
+                      Login
+                    </h5>
+                  </Link>
+                </div>}
 
                 {session && (
                   <div className="col-6 col-md-2 align-self-center">
@@ -110,7 +123,7 @@ const MainNavigation = () => {
                 )}
 
                 {!session ? (
-                  <div className="col-6 col-md-5 pt-1 mb-2 m-md-0 ">
+                  <div className="w-auto pt-1 mb-2 m-md-0 ">
                     <Link
                       style={{ transition: "all 0.3s ease-in" }}
                       className={
