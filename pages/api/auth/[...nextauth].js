@@ -53,7 +53,7 @@ export const authOptions = {
   jwt: {
     signingKey: process.env.JWT_SIGNING_PRIVATE_KEY,
   },
-  database: process.env.DATABASE_URL,
+  database: process.env.NEXT_PUBLIC_MONGODB_URI,
   adapter: MongoDBAdapter(clientPromise),
   secret: process.env.SECRET
 };
