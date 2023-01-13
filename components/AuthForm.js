@@ -11,7 +11,7 @@ const AuthForm = (props) => {
   const passwordRef = useRef();
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState();
-  let router = useRouter();
+  const router = useRouter();
 
   const submitFormHandler = async (e) => {
     setIsLoading(true);
